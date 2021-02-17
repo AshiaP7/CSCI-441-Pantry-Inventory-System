@@ -14,10 +14,10 @@ if(!in_array($domainname, $allowed)){
 }
 if($_GET){
 	if(isset($_GET['search'])) {
-		$json = file_get_contents("https://api.spoonacular.com/recipes/search?apiKey=" . $apikey . "&query=" . $_GET['search']);
+		$json = file_get_contents("https://api.spoonacular.com/recipes/search?apiKey=" . $apikey . "&query=" . urlencode($_GET['search']));
 	}
 	else if (isset($_GET['stepurl'])) {
-		$json = file_get_contents("https://api.spoonacular.com/recipes/extract?apiKey=" . $apikey . "&url=" . $_GET['stepurl']);
+		$json = file_get_contents("https://api.spoonacular.com/recipes/extract?apiKey=" . $apikey . "&url=" . urlencode($_GET['stepurl']));
 	}
 	else {
 		exit();

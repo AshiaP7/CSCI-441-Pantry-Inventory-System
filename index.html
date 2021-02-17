@@ -9,6 +9,7 @@ send request to our webserver then send to api.
 $( document ).ready(function() {
 $("#test").click(function() {
 	var searchval = $('#searchtext').val();
+	searchval = encodeURIComponent(searchval, "UTF-8");
 	$.ajax({ 
 		type: "GET",
 		url: "php/request.php?search=" + searchval,
