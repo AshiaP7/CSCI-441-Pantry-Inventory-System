@@ -11,7 +11,7 @@ $("#test").click(function() {
 	var searchval = $('#searchtext').val();
 	$.ajax({ 
 		type: "GET",
-		url: "https://api.spoonacular.com/recipes/search?apiKey=fbd4007d4eae44aebd9d387fc1a9292c&query=" + searchval + "&number=20",
+		url: "php/request.php?search=" + searchval,
 		dataType: 'json',
 		success: function(data) {
 			searchdata = data;
@@ -28,7 +28,7 @@ $.stepbystep = function(id) {
 	var url = searchdata.results[id].sourceUrl;
 	$.ajax({ 
 		type: "GET",
-		url: "https://api.spoonacular.com/recipes/extract?apiKey=fbd4007d4eae44aebd9d387fc1a9292c&url=" + url,
+		url: "php/request.php?stepurl=" + url,
 		dataType: 'json',
 		success: function(data) {
 			$("#ingredients").html("");
@@ -52,14 +52,10 @@ function get_step(id) {
 	$.stepbystep(id);
 }
 
-function data_test() {
-	alert("test: " + searchdata.results[0].title);
-}
-
 </script>
 </head>
 <body>
-<input type="text" id="searchtext" /> <br> <a href='#' id='test'> SearchTest </a><br>
+<input type="text" id="searchtext" /> <br> <button id='test'> Search </button><br>
 <div id="showresults">
 
 </div>
@@ -68,6 +64,5 @@ function data_test() {
 <div id='stepbystepid'></div>
 <br>
 <div id='debugurl'></div>
-<button onclick="data_test();">Test</button>
 </body>
 </html>
