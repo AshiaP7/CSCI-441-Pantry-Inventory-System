@@ -16,8 +16,7 @@ require './PHPMailer/Exception.php';
 require './PHPMailer/PHPMailer.php';
 require './PHPMailer/SMTP.php';
 
-
-function SendEmail($content) {
+function SendEmail($to, $content) {
 	//Create a new PHPMailer instance
 	$mail = new PHPMailer();
 
@@ -55,7 +54,7 @@ function SendEmail($content) {
 	$mail->setFrom('hbprophecy@gmail.com', 'First Last');
 
 	//Set an alternative reply-to address
-	$mail->addReplyTo('replyto@example.com', 'First Last');
+	$mail->addReplyTo($to, 'First Last');
 
 	//Set who the message is to be sent to
 	$mail->addAddress('whoto@example.com', 'John Doe');
@@ -65,7 +64,7 @@ function SendEmail($content) {
 
 	//Read an HTML message body from an external file, convert referenced images to embedded,
 	//convert HTML into a basic plain-text alternative body
-	$mail->msgHTML("Please confirm your email address by clicking the link: <a href='http://hbprophecy.com/school/php/mailconfirm.php?key=123'>http://hbprophecy.com/school/php/mailconfirm.php?key=123</a>");
+	$mail->msgHTML($content);
 
 	//Replace the plain text body with one created manually
 	$mail->AltBody = 'This is a plain-text message body';
