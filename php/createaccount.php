@@ -40,7 +40,7 @@ if($_POST) {
 	$mysqli->close();
 	
 	$hashemail = hash(sha256, $email, false);
-	$mailcontent = "Please confirm your email address by clicking the link: <a href='http://hbprophecy.com/school/php/mailconfirm.php?key=$hashemail'>http://hbprophecy.com/school/php/mailconfirm.php?key=$hashemail</a>"
+	$mailcontent = "Please confirm your email address by clicking the link: <a href='http://hbprophecy.com/school/php/mailconfirm.php?user=$username&key=$hashemail'>http://hbprophecy.com/school/php/mailconfirm.php?user=$username&key=$hashemail</a>"
 	SendEmail($email, $mailcontent);
 }
 ?>
