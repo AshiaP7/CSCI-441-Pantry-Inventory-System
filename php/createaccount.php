@@ -1,5 +1,10 @@
 <?php
-include "sendmail.php"
+include "sendmail.php";
+
+define("mysqlip", "127.0.0.1");
+define("mysqluser","user");
+define("mysqlpass", "password");
+
 if($_POST) {
 	$username = $_POST['username'];
 	if($_POST['password'] == '' || $_POST['username'] == '' || $_POST['email'] == '' || $_POST['question'] == '' || $_POST['answer'] == '')  die("please fill in out fields");
@@ -39,8 +44,8 @@ if($_POST) {
 	}
 	$mysqli->close();
 	
-	$hashemail = hash(sha256, $email, false);
-	$mailcontent = "Please confirm your email address by clicking the link: <a href='http://hbprophecy.com/school/php/mailconfirm.php?user=$username&key=$hashemail'>http://hbprophecy.com/school/php/mailconfirm.php?user=$username&key=$hashemail</a>"
+	$hashemail = hash('sha256', $email, false);
+	$mailcontent = "Please confirm your email address by clicking the link: <a href='http://hbprophecy.com/school/php/mailconfirm.php?user=$username&key=$hashemail'>http://hbprophecy.com/school/php/mailconfirm.php?user=$username&key=$hashemail</a>";
 	SendEmail($email, $mailcontent);
 }
 ?>

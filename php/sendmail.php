@@ -45,7 +45,7 @@ function SendEmail($to, $content) {
 	$mail->SMTPAuth = true;
 
 	//Username to use for SMTP authentication - use full email address for gmail
-	$mail->Username = 'username@gmail.com';
+	$mail->Username = 'useremail@gmail.com';
 
 	//Password to use for SMTP authentication
 	$mail->Password = 'password';
@@ -54,10 +54,10 @@ function SendEmail($to, $content) {
 	$mail->setFrom('hbprophecy@gmail.com', 'First Last');
 
 	//Set an alternative reply-to address
-	$mail->addReplyTo($to, 'First Last');
+	$mail->addReplyTo('hbprophecy@gmail.com', 'First Last');
 
 	//Set who the message is to be sent to
-	$mail->addAddress('whoto@example.com', 'John Doe');
+	$mail->addAddress($to, 'John Doe');
 
 	//Set the subject line
 	$mail->Subject = 'PHPMailer GMail SMTP test';
