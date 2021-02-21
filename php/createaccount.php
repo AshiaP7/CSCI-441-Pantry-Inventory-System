@@ -4,7 +4,7 @@ if($_POST) {
 	$username = $_POST['username'];
 	if($_POST['password'] == '' || $_POST['username'] == '' || $_POST['email'] == '' || $_POST['question'] == '' || $_POST['answer'] == '')  die("please fill in out fields");
 	if($_POST['password'] != $_POST['passrep']) die("Passwords do not match confirmation password");
-	$password = $_POST['password'];
+	$password = password_hash($_POST['password'], PASSWORD_DEFAULT); //hash password
 	$email = $_POST['email'];
 	$question = $_POST['question'];
 	$answer = $_POST['answer'];
@@ -39,7 +39,7 @@ if($_POST) {
 	}
 	$mysqli->close();
 	
-	$hashemail = hash(sha256, $email, false);
+	$hashemail = hash('sha256', $email, false);
 	$mailcontent = "Please confirm your email address by clicking the link: <a href='http://hbprophecy.com/school/php/mailconfirm.php?user=$username&key=$hashemail'>http://hbprophecy.com/school/php/mailconfirm.php?user=$username&key=$hashemail</a>"
 	SendEmail($email, $mailcontent);
 }
