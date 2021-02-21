@@ -9,7 +9,7 @@ if($_POST) {
 	$username = $_POST['username'];
 	if($_POST['password'] == '' || $_POST['username'] == '' || $_POST['email'] == '' || $_POST['question'] == '' || $_POST['answer'] == '')  die("please fill in out fields");
 	if($_POST['password'] != $_POST['passrep']) die("Passwords do not match confirmation password");
-	$password = $_POST['password'];
+	$password = password_hash($_POST['password'], PASSWORD_DEFAULT); //hash password
 	$email = $_POST['email'];
 	$question = $_POST['question'];
 	$answer = $_POST['answer'];
