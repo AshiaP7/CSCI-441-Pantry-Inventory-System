@@ -1,24 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\marleythe9\\source\\repos\\Pantry Inventory\\Pantry Inventory\\Pantry Inventory.csproj": {}
+    "D:\\repository\\AndroidApp\\Pantry Inventory\\Pantry Inventory\\Pantry Inventory.csproj": {}
   },
   "projects": {
-    "C:\\Users\\marleythe9\\source\\repos\\Pantry Inventory\\Pantry Inventory\\Pantry Inventory.csproj": {
+    "D:\\repository\\AndroidApp\\Pantry Inventory\\Pantry Inventory\\Pantry Inventory.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\marleythe9\\source\\repos\\Pantry Inventory\\Pantry Inventory\\Pantry Inventory.csproj",
+        "projectUniqueName": "D:\\repository\\AndroidApp\\Pantry Inventory\\Pantry Inventory\\Pantry Inventory.csproj",
         "projectName": "Pantry Inventory",
-        "projectPath": "C:\\Users\\marleythe9\\source\\repos\\Pantry Inventory\\Pantry Inventory\\Pantry Inventory.csproj",
-        "packagesPath": "C:\\Users\\marleythe9\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\marleythe9\\source\\repos\\Pantry Inventory\\Pantry Inventory\\obj\\",
+        "projectPath": "D:\\repository\\AndroidApp\\Pantry Inventory\\Pantry Inventory\\Pantry Inventory.csproj",
+        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+        "outputPath": "D:\\repository\\AndroidApp\\Pantry Inventory\\Pantry Inventory\\obj\\",
         "projectStyle": "PackageReference",
         "skipContentFileWrite": true,
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\"
         ],
         "configFilePaths": [
-          "C:\\Users\\marleythe9\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
@@ -38,10 +38,6 @@
       "frameworks": {
         "monoandroid90": {
           "dependencies": {
-            "Vintasoft.XamarinBarcode.Android": {
-              "target": "Package",
-              "version": "[12.4.2.5, )"
-            },
             "Xamarin.Android.Support.Core.Utils": {
               "target": "Package",
               "version": "[28.0.0.3, )"
@@ -56,7 +52,11 @@
             },
             "Xamarin.Essentials": {
               "target": "Package",
-              "version": "[1.5.3.2, )"
+              "version": "[1.6.1, )"
+            },
+            "ZXing.Net.MobileX.Forms": {
+              "target": "Package",
+              "version": "[3.0.1, )"
             }
           }
         }
