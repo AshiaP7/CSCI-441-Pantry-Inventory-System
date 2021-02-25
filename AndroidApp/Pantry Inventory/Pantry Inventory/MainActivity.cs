@@ -7,21 +7,30 @@ using Android.Support.V7.App;
 using Android.Views;
 using Android.Widget;
 using Android.Webkit;
+using System.Threading.Tasks;
+using System.Text;
+using System.Collections.Generic;
 using ZXing;
 using ZXing.Mobile;
+
 
 namespace Pantry_Inventory
 {
     [Activity(Label = "Pantry Inventory", Theme = "@style/AppTheme.NoActionBar", MainLauncher = true)]
-    public class MainActivity : AppCompatActivity
+    public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
-        MobileBarcodeScanner scanPage;
+        MobileBarcodeScanner scanner;
         WebView webView;
+ 
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
+            global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+
+            Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             SetContentView(Resource.Layout.activity_main);
+            
             webView = FindViewById<WebView>(Resource.Id.webView);
             webView.Settings.JavaScriptEnabled = true;
             webView.LoadUrl("http://hbprophecy.com/school/");
@@ -31,6 +40,9 @@ namespace Pantry_Inventory
 
             Android.Support.V7.Widget.Toolbar toolbar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.toolbar);
             SetSupportActionBar(toolbar);
+
+            //Create a new instance of our Scanner
+            scanner = new MobileBarcodeScanner();
         }
 
         public override bool OnCreateOptionsMenu(IMenu menu)
@@ -48,18 +60,7 @@ namespace Pantry_Inventory
             }
             if (id == Resource.Id.action_BarCode)
             {
-                scanPage = new MobileBarcodeScanner();
-                var result = scanPage.Scan();
-                    //do something
-                    Android.App.AlertDialog.Builder alertDialog = new Android.App.AlertDialog.Builder(this);
-                    alertDialog.SetTitle("Simple Alert Dialog");
-                    alertDialog.SetMessage("BarCode: " + result.Result.Text);
-                    alertDialog.SetNeutralButton("OK", delegate
-                    {
-                        alertDialog.Dispose();
-                    });
-                    alertDialog.Show();
-                
+                OpenScanner();
                 return true;
             }
 
@@ -73,11 +74,80 @@ namespace Pantry_Inventory
                 .SetAction("Action", (Android.Views.View.IOnClickListener)null).Show();
         }
 
+
+        void HandleScanResult(ZXing.Result result)
+        {
+            var msg = "";
+
+            if (result != null && !string.IsNullOrEmpty(result.Text))
+                msg = "Found Barcode: " + result.Text;
+            else
+                msg = "Scanning Canceled!";
+
+            RunOnUiThread(() => Toast.MakeText(this, msg, ToastLength.Short).Show());
+        }
+
+
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+
         }
-	}
+
+        public async void OpenScanner()
+        {
+
+            scanner.UseCustomOverlay = false;
+
+            //Start scanning
+            var result = await scanner.Scan();
+
+            HandleScanResult(result);
+            
+        }
+
+
+        [Java.Interop.Export("UITestBackdoorScan")]
+        public Java.Lang.String UITestBackdoorScan(string param)
+        {
+            var expectedFormat = BarcodeFormat.QR_CODE;
+            Enum.TryParse(param, out expectedFormat);
+            var opts = new MobileBarcodeScanningOptions
+            {
+                PossibleFormats = new List<BarcodeFormat> { expectedFormat }
+            };
+            var barcodeScanner = new MobileBarcodeScanner();
+
+            Console.WriteLine("Scanning " + expectedFormat);
+
+            //Start scanning
+            barcodeScanner.Scan(opts).ContinueWith(t =>
+            {
+
+                var result = t.Result;
+
+                var format = result?.BarcodeFormat.ToString() ?? string.Empty;
+                var value = result?.Text ?? string.Empty;
+
+                RunOnUiThread(() =>
+                {
+
+                    Android.App.AlertDialog dialog = null;
+                    dialog = new Android.App.AlertDialog.Builder(this)
+                                    .SetTitle("Barcode Result")
+                                    .SetMessage(format + "|" + value)
+                                    .SetNeutralButton("OK", (sender, e) =>
+                                    {
+                                        dialog.Cancel();
+                                    }).Create();
+                    dialog.Show();
+                });
+            });
+
+            return new Java.Lang.String();
+        }
+
+    }
 }

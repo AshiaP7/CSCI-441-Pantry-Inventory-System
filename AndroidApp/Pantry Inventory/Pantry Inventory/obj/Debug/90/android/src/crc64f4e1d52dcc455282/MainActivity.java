@@ -2,7 +2,7 @@ package crc64f4e1d52dcc455282;
 
 
 public class MainActivity
-	extends android.support.v7.app.AppCompatActivity
+	extends crc643f46942d9dd1fff9.FormsAppCompatActivity
 	implements
 		mono.android.IGCUserPeer
 {
@@ -14,6 +14,7 @@ public class MainActivity
 			"n_onCreateOptionsMenu:(Landroid/view/Menu;)Z:GetOnCreateOptionsMenu_Landroid_view_Menu_Handler\n" +
 			"n_onOptionsItemSelected:(Landroid/view/MenuItem;)Z:GetOnOptionsItemSelected_Landroid_view_MenuItem_Handler\n" +
 			"n_onRequestPermissionsResult:(I[Ljava/lang/String;[I)V:GetOnRequestPermissionsResult_IarrayLjava_lang_String_arrayIHandler\n" +
+			"n_UITestBackdoorScan:(Ljava/lang/String;)Ljava/lang/String;:__export__\n" +
 			"";
 		mono.android.Runtime.register ("Pantry_Inventory.MainActivity, Pantry Inventory", MainActivity.class, __md_methods);
 	}
@@ -57,6 +58,14 @@ public class MainActivity
 	}
 
 	private native void n_onRequestPermissionsResult (int p0, java.lang.String[] p1, int[] p2);
+
+
+	public java.lang.String UITestBackdoorScan (java.lang.String p0)
+	{
+		return n_UITestBackdoorScan (p0);
+	}
+
+	private native java.lang.String n_UITestBackdoorScan (java.lang.String p0);
 
 	private java.util.ArrayList refList;
 	public void monodroidAddReference (java.lang.Object obj)
