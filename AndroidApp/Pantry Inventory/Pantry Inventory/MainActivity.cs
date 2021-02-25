@@ -17,11 +17,11 @@ using ZXing.Mobile;
 namespace Pantry_Inventory
 {
     [Activity(Label = "Pantry Inventory", Theme = "@style/AppTheme.NoActionBar", MainLauncher = true)]
-    public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
+    public class MainActivity : AppCompatActivity
     {
         MobileBarcodeScanner scanner;
         WebView webView;
- 
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -30,7 +30,7 @@ namespace Pantry_Inventory
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             SetContentView(Resource.Layout.activity_main);
-            
+
             webView = FindViewById<WebView>(Resource.Id.webView);
             webView.Settings.JavaScriptEnabled = true;
             webView.LoadUrl("http://hbprophecy.com/school/");
@@ -69,7 +69,7 @@ namespace Pantry_Inventory
 
         private void FabOnClick(object sender, EventArgs eventArgs)
         {
-            View view = (View) sender;
+            View view = (View)sender;
             Snackbar.Make(view, "Replace with your own action", Snackbar.LengthLong)
                 .SetAction("Action", (Android.Views.View.IOnClickListener)null).Show();
         }
@@ -105,7 +105,26 @@ namespace Pantry_Inventory
             var result = await scanner.Scan();
 
             HandleScanResult(result);
-            
+
+        }
+
+        public override void OnBackPressed()
+        {
+            //if (condition)
+            //  super.onBackPressed(); // this close app
+            //else
+            // your code to open MainActivity
+            //}
+            if (webView.CanGoBack())
+            {
+                webView.GoBack();
+                return;
+            }
+            else
+            {
+               base.OnBackPressed();
+            }
+               
         }
 
 
