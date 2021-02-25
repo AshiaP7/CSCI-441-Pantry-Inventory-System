@@ -1,0 +1,62 @@
+@string/appbar_scrolling_view_behavior;D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\lp\40\jl\res\layout\flyoutcontent.xml
+@string/appbar_scrolling_view_behavior;D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\lp\40\jl\res\layout\rootlayout.xml
+@string/appbar_scrolling_view_behavior;obj\Debug\90\res\layout\content_main.xml
+adaptive-icon;obj\Debug\90\res\mipmap-anydpi-v26\ic_launcher.xml
+adaptive-icon;obj\Debug\90\res\mipmap-anydpi-v26\ic_launcher_round.xml
+alpha;D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\lp\40\jl\res\anim\enterfromleft.xml
+alpha;D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\lp\40\jl\res\anim\exittoleft.xml
+android.support.design.widget.AppBarLayout;D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\lp\40\jl\res\layout\flyoutcontent.xml
+android.support.design.widget.AppBarLayout;D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\lp\40\jl\res\layout\rootlayout.xml
+android.support.design.widget.AppBarLayout;D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\lp\40\jl\res\layout\shellcontent.xml
+android.support.design.widget.AppBarLayout;obj\Debug\90\res\layout\activity_main.xml
+android.support.design.widget.BottomNavigationView;D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\lp\40\jl\res\layout\bottomtablayout.xml
+android.support.design.widget.CoordinatorLayout;D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\lp\40\jl\res\layout\flyoutcontent.xml
+android.support.design.widget.CoordinatorLayout;D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\lp\40\jl\res\layout\rootlayout.xml
+android.support.design.widget.CoordinatorLayout;D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\lp\40\jl\res\layout\shellcontent.xml
+android.support.design.widget.CoordinatorLayout;obj\Debug\90\res\layout\activity_main.xml
+android.support.design.widget.TabLayout;D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\lp\40\jl\res\layout\rootlayout.xml
+android.support.v7.widget.RecyclerView;D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\lp\40\jl\res\layout\flyoutcontent.xml
+android.support.v7.widget.Toolbar;D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\lp\40\jl\res\layout\rootlayout.xml
+android.support.v7.widget.Toolbar;D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\lp\40\jl\res\layout\shellcontent.xml
+android.support.v7.widget.Toolbar;obj\Debug\90\res\layout\activity_main.xml
+android.webkit.WebView;obj\Debug\90\res\layout\content_main.xml
+background;obj\Debug\90\res\mipmap-anydpi-v26\ic_launcher.xml
+background;obj\Debug\90\res\mipmap-anydpi-v26\ic_launcher_round.xml
+cache-path;D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\lp\39\jl\res\xml\xamarin_essentials_fileprovider_file_paths.xml
+color;obj\Debug\90\res\values\colors.xml
+color;obj\Debug\90\res\values\ic_launcher_background.xml
+dimen;obj\Debug\90\res\values\dimens.xml
+external-cache-path;D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\lp\39\jl\res\xml\xamarin_essentials_fileprovider_file_paths.xml
+external-path;D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\lp\39\jl\res\xml\xamarin_essentials_fileprovider_file_paths.xml
+foreground;obj\Debug\90\res\mipmap-anydpi-v26\ic_launcher.xml
+foreground;obj\Debug\90\res\mipmap-anydpi-v26\ic_launcher_round.xml
+FrameLayout;D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\lp\40\jl\res\layout\bottomtablayout.xml
+FrameLayout;D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\lp\43\jl\res\layout\zxingscanneractivitylayout.xml
+FrameLayout;D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\lp\43\jl\res\layout\zxingscannerfragmentlayout.xml
+include;obj\Debug\90\res\layout\activity_main.xml
+item;D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\lp\40\jl\res\values\styles.xml
+item;obj\Debug\90\res\menu\menu_main.xml
+item;obj\Debug\90\res\values\styles.xml
+LinearLayout;D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\lp\40\jl\res\layout\bottomtablayout.xml
+menu;obj\Debug\90\res\menu\menu_main.xml
+paths;D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\lp\39\jl\res\xml\xamarin_essentials_fileprovider_file_paths.xml
+RelativeLayout;obj\Debug\90\res\layout\content_main.xml
+resources;D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\lp\40\jl\res\values\styles.xml
+resources;obj\Debug\90\res\values\colors.xml
+resources;obj\Debug\90\res\values\dimens.xml
+resources;obj\Debug\90\res\values\ic_launcher_background.xml
+resources;obj\Debug\90\res\values\strings.xml
+resources;obj\Debug\90\res\values\styles.xml
+set;D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\lp\40\jl\res\anim\enterfromleft.xml
+set;D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\lp\40\jl\res\anim\enterfromright.xml
+set;D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\lp\40\jl\res\anim\exittoleft.xml
+set;D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\lp\40\jl\res\anim\exittoright.xml
+string;obj\Debug\90\res\values\strings.xml
+style;D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\lp\40\jl\res\values\styles.xml
+style;obj\Debug\90\res\values\styles.xml
+TextView;obj\Debug\90\res\layout\content_main.xml
+translate;D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\lp\40\jl\res\anim\enterfromleft.xml
+translate;D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\lp\40\jl\res\anim\enterfromright.xml
+translate;D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\lp\40\jl\res\anim\exittoleft.xml
+translate;D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\lp\40\jl\res\anim\exittoright.xml
+xamarin.forms.platform.android.appcompat.FormsViewPager;D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\lp\40\jl\res\layout\rootlayout.xml

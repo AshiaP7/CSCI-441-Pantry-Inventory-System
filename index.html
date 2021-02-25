@@ -1,73 +1,15 @@
 <html>
 <head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script>
-var searchdata;
-/*
-send request to our webserver then send to api.
-*/
-$( document ).ready(function() {
-$("#test").click(function() {
-	var searchval = $('#searchtext').val();
-	$.ajax({ 
-		type: "GET",
-		url: "https://api.spoonacular.com/recipes/search?apiKey=fbd4007d4eae44aebd9d387fc1a9292c&query=" + searchval + "&number=20",
-		dataType: 'json',
-		success: function(data) {
-			searchdata = data;
-			$("#showresults").html("");
-			$.each(data.results, function(i, item) {
-				$("#showresults").append(data.results[i].title + "(Minutes:" + data.results[i].readyInMinutes + ")<br><a href='javascript:get_step(" + i + ");'><img src='" + "https://spoonacular.com/recipeImages/" + data.results[i].id + "-90x90.jpg" + "'></a>" + "<br>");
-			});
-			
-		}
-	});
-});
-
-$.stepbystep = function(id) {
-	var url = searchdata.results[id].sourceUrl;
-	$.ajax({ 
-		type: "GET",
-		url: "https://api.spoonacular.com/recipes/extract?apiKey=fbd4007d4eae44aebd9d387fc1a9292c&url=" + url,
-		dataType: 'json',
-		success: function(data) {
-			$("#ingredients").html("");
-			$("#stepbystepid").html("");
-			$("#showresults").html("");
-			$("#debugurl").html(url);
-			$.each(data.extendedIngredients, function(i, item) {
-				$("#ingredients").append(data.extendedIngredients[i].originalString + "<br>");
-			});
-			$.each(data.analyzedInstructions[0].steps, function(i, item) {
-				$("#stepbystepid").append(data.analyzedInstructions[0].steps[i].number + ". " + data.analyzedInstructions[0].steps[i].step + "<br>");
-			});
-			
-		}
-	});
-}
-
-});
-
-function get_step(id) {
-	$.stepbystep(id);
-}
-
-function data_test() {
-	alert("test: " + searchdata.results[0].title);
-}
-
-</script>
+<script src="request.js"></script>
 </head>
 <body>
-<input type="text" id="searchtext" /> <br> <a href='#' id='test'> SearchTest </a><br>
+<input type="text" id="searchtext" /> <br> <button id='test' onclick='get_search("searchtext");'> Search </button><br>
 <div id="showresults">
 
 </div>
-<div id='ingredients'></div><br>
-<h1>Step By Step</h1>
-<div id='stepbystepid'></div>
+<div id='showingredients'></div><br>
+<div id='showsteps'></div>
 <br>
-<div id='debugurl'></div>
-<button onclick="data_test();">Test</button>
+<div id='showurl'></div>
 </body>
 </html>
