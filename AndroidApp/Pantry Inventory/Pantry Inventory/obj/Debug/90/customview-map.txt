@@ -10,6 +10,7 @@ android.support.design.widget.AppBarLayout;D:\repository\AndroidApp\Pantry Inven
 android.support.design.widget.AppBarLayout;D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\lp\40\jl\res\layout\shellcontent.xml
 android.support.design.widget.AppBarLayout;obj\Debug\90\res\layout\activity_main.xml
 android.support.design.widget.BottomNavigationView;D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\lp\40\jl\res\layout\bottomtablayout.xml
+android.support.design.widget.BottomNavigationView;obj\Debug\90\res\layout\content_main.xml
 android.support.design.widget.CoordinatorLayout;D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\lp\40\jl\res\layout\flyoutcontent.xml
 android.support.design.widget.CoordinatorLayout;D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\lp\40\jl\res\layout\rootlayout.xml
 android.support.design.widget.CoordinatorLayout;D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\lp\40\jl\res\layout\shellcontent.xml
@@ -38,6 +39,7 @@ item;D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\lp\
 item;obj\Debug\90\res\menu\menu_main.xml
 item;obj\Debug\90\res\values\styles.xml
 LinearLayout;D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\lp\40\jl\res\layout\bottomtablayout.xml
+LinearLayout;obj\Debug\90\res\layout\secondary.xml
 menu;obj\Debug\90\res\menu\menu_main.xml
 paths;D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\lp\39\jl\res\xml\xamarin_essentials_fileprovider_file_paths.xml
 RelativeLayout;obj\Debug\90\res\layout\content_main.xml
