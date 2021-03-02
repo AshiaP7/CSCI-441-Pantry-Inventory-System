@@ -19,6 +19,11 @@ if($_GET){
 	else if (isset($_GET['stepurl'])) {
 		$json = file_get_contents("https://api.spoonacular.com/recipes/extract?apiKey=" . $apikey . "&url=" . urlencode($_GET['stepurl']));
 	}
+	else if (isset($_GET['upc'])) {
+		//load page to display add / success
+		$json = file_get_contents("https://api.upcitemdb.com/prod/trial/lookup?upc=" . urlencode($_GET['upc']));
+		//html display item
+	}
 	else {
 		exit();
 	}
