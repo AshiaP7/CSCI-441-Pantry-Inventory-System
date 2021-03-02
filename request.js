@@ -13,10 +13,27 @@ send request to our webserver then send to api.
 //on jquery script done loading
 script.onload = function() {
 	var $ = window.jQuery; //set $ to use jquery.
+	
+	var pubinputid;
 $( document ).ready(function() {
 	
+            $(function() {
+                if (window.history && window.history.pushState) {
+                    $(window).on('popstate', function() {
+                        var stateObj = window.history.state;
+						if(stateObj != null) {
+							$('#searchtext').val(stateObj.searchval);
+							$.searchrequest(pubinputid, true);
+						}
+						else {
+							$("#showresults").html("");
+							$('#searchtext').val("");
+						}
+                    });
+                }
+            });
 	
-$.searchrequest = function(id) {
+$.searchrequest = function(id, popstate) {
 	var searchval = $('#searchtext').val();
 	searchval = encodeURIComponent(searchval, "UTF-8");
 	$.ajax({ 
@@ -29,9 +46,9 @@ $.searchrequest = function(id) {
 			$.each(data.results, function(i, item) {
 				$("#showresults").append(data.results[i].title + "(Minutes:" + data.results[i].readyInMinutes + ")<br><a href='javascript:get_step(" + i + ");'><img src='" + "https://spoonacular.com/recipeImages/" + data.results[i].id + "-90x90.jpg" + "'></a>" + "<br>");
 			});
-			
 		}
 	});
+	if(popstate == false) history.pushState({ searchval }, 'Title: ' + searchval, '?search=' + searchval);
 }
 
 $.clearshowresults = function() {
@@ -68,7 +85,24 @@ $.stepbystep = function(id) {
 			
 		}
 	});
+	//if(popstate == false) history.pushState({ data }, 'Title: ' + id, '?step=' + id);
 }
+
+$.upcquery = function(upc) {
+	$.ajax({ 
+		type: "GET",
+		url: "php/request.php?upc=" + upc,
+		dataType: 'json',
+		success: function(data) {
+			$.clearshowresults();
+			$.clearshowurl();
+			$.clearshowingredients();
+			$("#showsteps").html("<h3>" + data.items[0].title + "</h3><p>UPC:" + data.items[0].upc + "<br>" + data.items[0].brand + "</p>");
+			
+		}
+	});
+}
+
 
 });
 };
@@ -78,5 +112,6 @@ function get_step(id) {
 }
 function get_search(inputid) {
 	var search = document.getElementById(inputid).value;
-	$.searchrequest(search);
+	pubinputid = inputid;
+	$.searchrequest(search, false);
 }	
