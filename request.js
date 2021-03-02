@@ -85,6 +85,22 @@ $.stepbystep = function(id) {
 			
 		}
 	});
+	//if(popstate == false) history.pushState({ data }, 'Title: ' + id, '?step=' + id);
+}
+
+$.upcquery = function(upc) {
+	$.ajax({ 
+		type: "GET",
+		url: "php/request.php?upc=" + upc,
+		dataType: 'json',
+		success: function(data) {
+			$.clearshowresults();
+			$.clearshowurl();
+			$.clearshowingredients();
+			$("#showsteps").html("<h3>" + data.items[0].title + "</h3><p>UPC:" + data.items[0].upc + "<br>" + data.items[0].brand + "</p>");
+			
+		}
+	});
 }
 
 
