@@ -115,3 +115,6 @@ function get_search(inputid) {
 	pubinputid = inputid;
 	$.searchrequest(search, false);
 }	
+function upcquery(upc) {
+	$.upcquery(upc);
+}
