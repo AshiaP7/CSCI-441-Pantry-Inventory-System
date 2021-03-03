@@ -17,7 +17,7 @@ using Newtonsoft.Json;
 
 namespace Pantry_Inventory
 {
-    [Activity(Label = "Pantry Inventory", Theme = "@style/AppTheme.NoActionBar", MainLauncher = true)]
+    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = true)]
     public class MainActivity : AppCompatActivity
     {
         MobileBarcodeScanner scanner;

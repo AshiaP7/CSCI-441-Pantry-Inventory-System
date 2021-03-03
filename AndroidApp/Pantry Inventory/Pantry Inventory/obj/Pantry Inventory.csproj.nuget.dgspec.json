@@ -1,42 +1,42 @@
 {
   "format": 1,
   "restore": {
-    "D:\\repository\\AndroidApp\\Pantry Inventory\\Pantry Inventory\\Pantry Inventory.csproj": {}
+    "X:\\School\\repository\\proj\\AndroidApp\\Pantry Inventory\\Pantry Inventory\\Pantry Inventory.csproj": {}
   },
   "projects": {
-    "D:\\repository\\AndroidApp\\Pantry Inventory\\Pantry Inventory\\Pantry Inventory.csproj": {
+    "X:\\School\\repository\\proj\\AndroidApp\\Pantry Inventory\\Pantry Inventory\\Pantry Inventory.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\repository\\AndroidApp\\Pantry Inventory\\Pantry Inventory\\Pantry Inventory.csproj",
+        "projectUniqueName": "X:\\School\\repository\\proj\\AndroidApp\\Pantry Inventory\\Pantry Inventory\\Pantry Inventory.csproj",
         "projectName": "Pantry Inventory",
-        "projectPath": "D:\\repository\\AndroidApp\\Pantry Inventory\\Pantry Inventory\\Pantry Inventory.csproj",
-        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "D:\\repository\\AndroidApp\\Pantry Inventory\\Pantry Inventory\\obj\\",
+        "projectPath": "X:\\School\\repository\\proj\\AndroidApp\\Pantry Inventory\\Pantry Inventory\\Pantry Inventory.csproj",
+        "packagesPath": "C:\\Users\\marleythe9\\.nuget\\packages\\",
+        "outputPath": "X:\\School\\repository\\proj\\AndroidApp\\Pantry Inventory\\Pantry Inventory\\obj\\",
         "projectStyle": "PackageReference",
         "skipContentFileWrite": true,
         "fallbackFolders": [
-          "C:\\Microsoft\\Xamarin\\NuGet\\"
+          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
         ],
         "configFilePaths": [
-          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\marleythe9\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "monoandroid90"
+          "monoandroid10.0"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "monoandroid90": {
+          "monoandroid10.0": {
             "projectReferences": {}
           }
         }
       },
       "frameworks": {
-        "monoandroid90": {
+        "monoandroid10.0": {
           "dependencies": {
             "Newtonsoft.Json": {
               "target": "Package",
