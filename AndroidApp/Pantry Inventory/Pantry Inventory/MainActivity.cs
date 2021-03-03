@@ -12,7 +12,8 @@ using System.Text;
 using System.Collections.Generic;
 using ZXing;
 using ZXing.Mobile;
-
+using System.Net.Http;
+using Newtonsoft.Json;
 
 namespace Pantry_Inventory
 {
@@ -80,13 +81,35 @@ namespace Pantry_Inventory
             var msg = "";
 
             if (result != null && !string.IsNullOrEmpty(result.Text))
+            {
                 msg = "Found Barcode: " + result.Text;
+                webView.LoadUrl("http://hbprophecy.com/school/php/request?upc=" + result.Text);
+            }    
             else
                 msg = "Scanning Canceled!";
 
             RunOnUiThread(() => Toast.MakeText(this, msg, ToastLength.Short).Show());
         }
 
+
+        private async void GetRequestUPC(string upc)
+        {
+            HttpClient clientCabinets = new HttpClient();
+            try
+            {
+                List<User> listeCabinets = null;
+                string url = "http://10.0.0.5/ppe3JoJuAd/gsbAppliFraisV2/webservices/w_cabinet.php";
+                var uri = new Uri(string.Format(url, string.Empty));
+                var response = await clientCabinets.GetAsync(uri);
+                string jsonString = await response.Content.ReadAsStringAsync();
+                listeCabinets = JsonConvert.DeserializeObject<List<User>>(jsonString);
+
+            }
+            catch (Exception e)
+            {
+
+            }
+        }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
@@ -168,5 +191,32 @@ namespace Pantry_Inventory
             return new Java.Lang.String();
         }
 
+    }
+
+    public class User
+    {
+        /// <summary>
+        /// A User's username. eg: "sergiotapia, mrkibbles, matumbo"
+        /// </summary>
+        [JsonProperty("username")]
+        public string Username { get; set; }
+
+        /// <summary>
+        /// A User's name. eg: "Sergio Tapia, John Cosack, Lucy McMillan"
+        /// </summary>
+        [JsonProperty("name")]
+        public string Name { get; set; }
+
+        /// <summary>
+        /// A User's location. eh: "Bolivia, USA, France, Italy"
+        /// </summary>
+        [JsonProperty("location")]
+        public string Location { get; set; }
+
+        [JsonProperty("endorsements")]
+        public int Endorsements { get; set; } //Todo.
+
+        [JsonProperty("team")]
+        public string Team { get; set; } //Todo.
     }
 }
