@@ -218,5 +218,17 @@ namespace Pantry_Inventory
 
         [JsonProperty("team")]
         public string Team { get; set; } //Todo.
+
+        /// <summary>
+        /// A collection of the User's linked accounts.
+        /// </summary>
+       // [JsonProperty("accounts")]
+        //public Account Accounts { get; set; }
+
+        /// <summary>
+        /// A collection of the User's awarded badges.
+        /// </summary>
+        //[JsonProperty("badges")]
+        //public List<Badge> Badges { get; set; }
     }
 }
