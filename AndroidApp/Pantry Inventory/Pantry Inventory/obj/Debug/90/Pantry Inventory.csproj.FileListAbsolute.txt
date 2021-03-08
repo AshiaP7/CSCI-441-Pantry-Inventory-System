@@ -739,7 +739,6 @@ D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\android\
 D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\android\src\crc6480997b3ef81bf9b2\ZXingScannerFragment.java
 D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\android\src\crc6480997b3ef81bf9b2\ZXingSurfaceView.java
 D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\android\src\crc6480997b3ef81bf9b2\ZXingSurfaceView_PixelCopyListener.java
-D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\stamp\SetupDependenciesForDesigner.stamp
 D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\android\typemap.jm.x86.s
 D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\android\typemap.mj.x86.s
 D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\android\environment.x86.s
@@ -747,6 +746,8 @@ D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\android\
 D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\android\typemap.mj.x86.o
 D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\android\environment.x86.o
 D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\app_shared_libraries\x86\libxamarin-app.so
-D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\android\src\crc64f4e1d52dcc455282\second.java
 D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\android\assets\Mono.Android.Export.dll
 D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\android\assets\Mono.Android.Export.pdb
+D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\android\assets\Newtonsoft.Json.dll
+D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\stamp\SetupDependenciesForDesigner.stamp
+D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\android\src\crc64f4e1d52dcc455282\MyWebViewClass.java
