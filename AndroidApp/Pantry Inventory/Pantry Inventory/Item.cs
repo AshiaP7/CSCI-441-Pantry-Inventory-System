@@ -15,10 +15,12 @@ namespace Pantry_Inventory
 {
     public class Item
     {
-        [JsonProperty("items")]
+        [JsonProperty("title")]
         public string title { get; set; }
 
         [JsonProperty("upc")]
         public string upc { get; set; }
+        [JsonProperty("images")]
+        public string[] images { get; set; }
     }
 }

@@ -59,6 +59,7 @@ namespace Pantry_Inventory
             int id = item.ItemId;
             if (id == Resource.Id.action_settings)
             {
+                GetRequestUPC("052000208719");
                 return true;
             }
             if (id == Resource.Id.action_BarCode)
@@ -97,17 +98,32 @@ namespace Pantry_Inventory
 
         private async void GetRequestUPC(string upc)
         {
-            HttpClient clientCabinets = new HttpClient();
-                List<ItemList> listeCabinets = null;
+            try
+            {
+                HttpClient clientCabinets = new HttpClient();
+                ItemList listeCabinets = null;
                 string url = "https://api.upcitemdb.com/prod/trial/lookup?upc=" + upc;
                 var uri = new Uri(string.Format(url, string.Empty));
                 var response = await clientCabinets.GetAsync(uri);
+                response.EnsureSuccessStatusCode();
                 var jsonString = await response.Content.ReadAsStringAsync();
-            if (response.IsSuccessStatusCode)
-            {
-                listeCabinets = JsonConvert.DeserializeObject<List<ItemList>>(jsonString);
-                Console.WriteLine("Name" + listeCabinets[0].Item[0].title);
+                if (response.IsSuccessStatusCode)
+                {
+                    listeCabinets = JsonConvert.DeserializeObject<ItemList>(jsonString);
+                    Console.WriteLine("UPC GET: " + listeCabinets.Item[0].title);
+                   if(listeCabinets.Item[0].images.Length > 0) Console.WriteLine("UPC GET: " + listeCabinets.Item[0].images[0]);
+                }
+                else
+                {
+                    Console.WriteLine("UPC Failed: ");
+                }
             }
+            catch(Exception exception)
+            {
+                Console.WriteLine("CAUGHT EXCEPTION:");
+                Console.WriteLine(exception);
+            }
+
                 
                 // Console.WriteLine("Name" + listeCabinets[0].Item[0].title);
                 //var builder = new Android.App.AlertDialog.Builder(this);
