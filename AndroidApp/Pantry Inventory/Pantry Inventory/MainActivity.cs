@@ -112,6 +112,10 @@ namespace Pantry_Inventory
                     listeCabinets = JsonConvert.DeserializeObject<ItemList>(jsonString);
                     Console.WriteLine("UPC GET: " + listeCabinets.Item[0].title);
                    if(listeCabinets.Item[0].images.Length > 0) Console.WriteLine("UPC GET: " + listeCabinets.Item[0].images[0]);
+                    //create event and or navigation html to setup a post to our server and to display the image.
+                    var intentConfirm = new Intent(this, typeof(ConfirmItem));
+                    intentConfirm.PutExtra("image", listeCabinets.Item[0].images[0]);
+                    this.StartActivity(intentConfirm);
                 }
                 else
                 {

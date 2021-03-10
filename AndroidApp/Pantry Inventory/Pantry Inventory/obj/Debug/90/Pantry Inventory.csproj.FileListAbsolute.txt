@@ -751,3 +751,5 @@ D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\android\
 D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\android\assets\Newtonsoft.Json.dll
 D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\stamp\SetupDependenciesForDesigner.stamp
 D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\android\src\crc64f4e1d52dcc455282\MyWebViewClass.java
+D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\res\layout\confirmitem.xml
+D:\repository\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\android\src\crc64f4e1d52dcc455282\ConfirmItem.java

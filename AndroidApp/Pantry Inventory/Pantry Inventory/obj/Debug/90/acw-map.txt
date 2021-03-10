@@ -1,3 +1,6 @@
+Pantry_Inventory.ConfirmItem, Pantry Inventory;crc64f4e1d52dcc455282.ConfirmItem
+Pantry_Inventory.ConfirmItem;crc64f4e1d52dcc455282.ConfirmItem
+pantry_inventory.ConfirmItem;crc64f4e1d52dcc455282.ConfirmItem
 Pantry_Inventory.MainActivity, Pantry Inventory;crc64f4e1d52dcc455282.MainActivity
 Pantry_Inventory.MainActivity;crc64f4e1d52dcc455282.MainActivity
 pantry_inventory.MainActivity;crc64f4e1d52dcc455282.MainActivity
