@@ -13,11 +13,12 @@ using System.Collections.Generic;
 using ZXing;
 using ZXing.Mobile;
 using System.Net.Http;
-using Newtonsoft.Json;
+using Newtonsoft.Json; //change
+using Android.Content;
 
 namespace Pantry_Inventory
 {
-    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = true)]
+    [Activity(Label = "Pantry Inventory", Theme = "@style/AppTheme.NoActionBar", MainLauncher = true)]
     public class MainActivity : AppCompatActivity
     {
         MobileBarcodeScanner scanner;
@@ -34,6 +35,7 @@ namespace Pantry_Inventory
 
             webView = FindViewById<WebView>(Resource.Id.webView);
             webView.Settings.JavaScriptEnabled = true;
+            webView.SetWebViewClient(new MyWebViewClass());
             webView.LoadUrl("http://hbprophecy.com/school/");
 
             Xamarin.Essentials.Platform.Init(Application);
@@ -44,6 +46,24 @@ namespace Pantry_Inventory
 
             //Create a new instance of our Scanner
             scanner = new MobileBarcodeScanner();
+        }
+        protected override void OnActivityResult(int requestCode, Android.App.Result resultCode, Intent data) //to override need android.app.result
+        {
+            
+            if (requestCode == 0)
+            {
+                if (resultCode == Android.App.Result.Ok)
+                {
+                    //here is your result
+                    Bundle Extrabundle = data.Extras;
+                    int upc = Extrabundle.GetInt("result_quantity", 0);
+                    Console.WriteLine("ACTIVITY RESULT: " + upc);
+                }
+                if (resultCode == Android.App.Result.Canceled)
+                {
+                    //Write your code if there's no result
+                }
+            }
         }
 
         public override bool OnCreateOptionsMenu(IMenu menu)
@@ -57,6 +77,7 @@ namespace Pantry_Inventory
             int id = item.ItemId;
             if (id == Resource.Id.action_settings)
             {
+                GetRequestUPC("052000208719");
                 return true;
             }
             if (id == Resource.Id.action_BarCode)
@@ -83,8 +104,9 @@ namespace Pantry_Inventory
             if (result != null && !string.IsNullOrEmpty(result.Text))
             {
                 msg = "Found Barcode: " + result.Text;
-                webView.LoadUrl("http://hbprophecy.com/school/php/request?upc=" + result.Text);
-            }    
+                GetRequestUPC(result.Text);
+                //webView.LoadUrl("http://hbprophecy.com/school/php/request?upc=" + result.Text);
+            }
             else
                 msg = "Scanning Canceled!";
 
@@ -94,23 +116,58 @@ namespace Pantry_Inventory
 
         private async void GetRequestUPC(string upc)
         {
-            HttpClient clientCabinets = new HttpClient();
             try
             {
-                List<User> listeCabinets = null;
-                string url = "http://10.0.0.5/ppe3JoJuAd/gsbAppliFraisV2/webservices/w_cabinet.php";
+                HttpClient clientCabinets = new HttpClient();
+                ItemList listeCabinets = null;
+                string url = "https://api.upcitemdb.com/prod/trial/lookup?upc=" + upc;
                 var uri = new Uri(string.Format(url, string.Empty));
                 var response = await clientCabinets.GetAsync(uri);
-                string jsonString = await response.Content.ReadAsStringAsync();
-                listeCabinets = JsonConvert.DeserializeObject<List<User>>(jsonString);
-
+                response.EnsureSuccessStatusCode();
+                var jsonString = await response.Content.ReadAsStringAsync();
+                if (response.IsSuccessStatusCode)
+                {
+                    listeCabinets = JsonConvert.DeserializeObject<ItemList>(jsonString);
+                    Console.WriteLine("UPC GET: " + listeCabinets.Item[0].title);
+                   if(listeCabinets.Item[0].images.Length > 0) Console.WriteLine("UPC GET: " + listeCabinets.Item[0].images[0]);
+                    //create event and or navigation html to setup a post to our server and to display the image.
+                    var intentConfirm = new Intent(this, typeof(ConfirmItem));
+                    intentConfirm.PutExtra("image", listeCabinets.Item[0].images[0]);
+                    this.StartActivityForResult(intentConfirm, 0);
+                }
+                else
+                {
+                    Console.WriteLine("UPC Failed: ");
+                }
             }
-            catch (Exception e)
+            catch(Exception exception)
             {
-
+                Console.WriteLine("CAUGHT EXCEPTION:");
+                Console.WriteLine(exception);
             }
-        }
 
+                
+                // Console.WriteLine("Name" + listeCabinets[0].Item[0].title);
+                //var builder = new Android.App.AlertDialog.Builder(this);
+                //builder.SetTitle("UPC");
+                //builder.SetNegativeButton("Okay", (EventHandler<DialogClickEventArgs>)null);
+                //builder.SetMessage("UPC: " + upc);
+
+            //var dialog = builder.Create();
+
+            //var noBtn = dialog.GetButton((int)DialogButtonType.Negative);
+
+            // Show the dialog. This is important to do before accessing the buttons.
+            //dialog.Show();
+
+            //noBtn.Click += (sender, args) =>
+            // {
+            // Dismiss dialog.
+            ///   Console.WriteLine("I will dismiss now!");
+            // dialog.Dismiss();
+            //};
+        }
+        
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -145,9 +202,9 @@ namespace Pantry_Inventory
             }
             else
             {
-               base.OnBackPressed();
+                base.OnBackPressed();
             }
-               
+
         }
 
 
@@ -191,44 +248,5 @@ namespace Pantry_Inventory
             return new Java.Lang.String();
         }
 
-    }
-
-    public class User
-    {
-        /// <summary>
-        /// A User's username. eg: "sergiotapia, mrkibbles, matumbo"
-        /// </summary>
-        [JsonProperty("username")]
-        public string Username { get; set; }
-
-        /// <summary>
-        /// A User's name. eg: "Sergio Tapia, John Cosack, Lucy McMillan"
-        /// </summary>
-        [JsonProperty("name")]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// A User's location. eh: "Bolivia, USA, France, Italy"
-        /// </summary>
-        [JsonProperty("location")]
-        public string Location { get; set; }
-
-        [JsonProperty("endorsements")]
-        public int Endorsements { get; set; } //Todo.
-
-        [JsonProperty("team")]
-        public string Team { get; set; } //Todo.
-
-        /// <summary>
-        /// A collection of the User's linked accounts.
-        /// </summary>
-       // [JsonProperty("accounts")]
-        //public Account Accounts { get; set; }
-
-        /// <summary>
-        /// A collection of the User's awarded badges.
-        /// </summary>
-        //[JsonProperty("badges")]
-        //public List<Badge> Badges { get; set; }
     }
 }
