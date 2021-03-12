@@ -35,6 +35,7 @@ namespace Pantry_Inventory
 
             webView = FindViewById<WebView>(Resource.Id.webView);
             webView.Settings.JavaScriptEnabled = true;
+            webView.SaveEnabled = true;
             webView.SetWebViewClient(new MyWebViewClass());
             webView.LoadUrl("http://hbprophecy.com/school/");
 
@@ -50,14 +51,19 @@ namespace Pantry_Inventory
         protected override void OnActivityResult(int requestCode, Android.App.Result resultCode, Intent data) //to override need android.app.result
         {
             
-            if (requestCode == 0)
+            if (requestCode == 1234)
             {
                 if (resultCode == Android.App.Result.Ok)
                 {
                     //here is your result
                     Bundle Extrabundle = data.Extras;
                     int upc = Extrabundle.GetInt("result_quantity", 0);
-                    Console.WriteLine("ACTIVITY RESULT: " + upc);
+                    //-------debug output to see result key values--------------//
+                    foreach (String key in Extrabundle.KeySet())
+                    {
+                        Console.WriteLine("EXTRA: " + key + " : " + (Extrabundle.Get(key) != null ? Extrabundle.Get(key) : "NULL"));
+                    }
+                    Console.WriteLine("ACTIVITY RESULT: " + upc); //upc result
                 }
                 if (resultCode == Android.App.Result.Canceled)
                 {
@@ -133,7 +139,10 @@ namespace Pantry_Inventory
                     //create event and or navigation html to setup a post to our server and to display the image.
                     var intentConfirm = new Intent(this, typeof(ConfirmItem));
                     intentConfirm.PutExtra("image", listeCabinets.Item[0].images[0]);
-                    this.StartActivityForResult(intentConfirm, 0);
+                    intentConfirm.PutExtra("upc", upc);
+                    intentConfirm.PutExtra("name", listeCabinets.Item[0].title);
+                    intentConfirm.PutExtra("brand", listeCabinets.Item[0].brand);
+                    this.StartActivityForResult(intentConfirm, 1234);
                 }
                 else
                 {
