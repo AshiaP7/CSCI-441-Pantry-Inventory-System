@@ -20,10 +20,6 @@ namespace Pantry_Inventory
 
         [JsonProperty("upc")]
         public string upc { get; set; }
-
-        [JsonProperty("brand")]
-        public string brand { get; set; }
-
         [JsonProperty("images")]
         public string[] images { get; set; }
     }

@@ -19,7 +19,7 @@ namespace Pantry_Inventory
     {
         private string str_upc;
         private string str_name;
-        private string str_brand;
+        private string str_type;
         private int iquantity;
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -30,26 +30,20 @@ namespace Pantry_Inventory
             LoadImageLink(Intent.GetStringExtra("image"));
             Button confirmbutton = FindViewById<Button>(Resource.Id.buttonconfirm);
             confirmbutton.Click += delegate {
-
-                EditText textquantity = (EditText)FindViewById(Resource.Id.quantity);
-                if(textquantity.Text.ToString() == string.Empty)
-                {
-                    Console.WriteLine("ConfirmItem invalid quantity");
-                    return;
-                }
-                iquantity = int.Parse(textquantity.Text.ToString());
-                if (iquantity <= 0)
-                {
-                    Console.WriteLine("ConfirmItem invalid quantity");
-                    return;
-                }
                 //have mainactivity post with entered quantity and ItemName & upc.
                 var sendvalue = new Intent();
                 var resultbundle = new Bundle();
+                EditText textquantity = (EditText)FindViewById(Resource.Id.quantity);
+                iquantity = int.Parse(textquantity.Text.ToString());
+                iquantity = 0;
+                if (iquantity <= 0)
+                {
+
+                }
 
                 resultbundle.PutString("result_upc", str_upc);
                 resultbundle.PutString("result_name", str_name);
-                resultbundle.PutString("result_brand", str_brand);
+                resultbundle.PutString("result_type", str_type);
                 resultbundle.PutInt("result_quantity", iquantity);
                 sendvalue.PutExtras(resultbundle);
                 SetResult(Result.Ok, sendvalue);
