@@ -22,12 +22,10 @@ android.support.v7.widget.Toolbar;X:\School\repository\proj\AndroidApp\Pantry In
 android.webkit.WebView;obj\Debug\90\res\layout\content_main.xml
 background;obj\Debug\90\res\mipmap-anydpi-v26\ic_launcher.xml
 background;obj\Debug\90\res\mipmap-anydpi-v26\ic_launcher_round.xml
-Button;obj\Debug\90\res\layout\confirmitem.xml
 cache-path;X:\School\repository\proj\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\lp\39\jl\res\xml\xamarin_essentials_fileprovider_file_paths.xml
 color;obj\Debug\90\res\values\colors.xml
 color;obj\Debug\90\res\values\ic_launcher_background.xml
 dimen;obj\Debug\90\res\values\dimens.xml
-EditText;obj\Debug\90\res\layout\confirmitem.xml
 external-cache-path;X:\School\repository\proj\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\lp\39\jl\res\xml\xamarin_essentials_fileprovider_file_paths.xml
 external-path;X:\School\repository\proj\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\lp\39\jl\res\xml\xamarin_essentials_fileprovider_file_paths.xml
 foreground;obj\Debug\90\res\mipmap-anydpi-v26\ic_launcher.xml
@@ -35,12 +33,10 @@ foreground;obj\Debug\90\res\mipmap-anydpi-v26\ic_launcher_round.xml
 FrameLayout;X:\School\repository\proj\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\lp\40\jl\res\layout\bottomtablayout.xml
 FrameLayout;X:\School\repository\proj\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\lp\43\jl\res\layout\zxingscanneractivitylayout.xml
 FrameLayout;X:\School\repository\proj\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\lp\43\jl\res\layout\zxingscannerfragmentlayout.xml
-ImageView;obj\Debug\90\res\layout\confirmitem.xml
 include;obj\Debug\90\res\layout\activity_main.xml
 item;obj\Debug\90\res\menu\menu_main.xml
 item;obj\Debug\90\res\values\styles.xml
 item;X:\School\repository\proj\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\lp\40\jl\res\values\styles.xml
-LinearLayout;obj\Debug\90\res\layout\confirmitem.xml
 LinearLayout;X:\School\repository\proj\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\lp\40\jl\res\layout\bottomtablayout.xml
 menu;obj\Debug\90\res\menu\menu_main.xml
 paths;X:\School\repository\proj\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\lp\39\jl\res\xml\xamarin_essentials_fileprovider_file_paths.xml
@@ -58,7 +54,6 @@ set;X:\School\repository\proj\AndroidApp\Pantry Inventory\Pantry Inventory\obj\D
 string;obj\Debug\90\res\values\strings.xml
 style;obj\Debug\90\res\values\styles.xml
 style;X:\School\repository\proj\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\lp\40\jl\res\values\styles.xml
-TextView;obj\Debug\90\res\layout\confirmitem.xml
 TextView;obj\Debug\90\res\layout\content_main.xml
 translate;X:\School\repository\proj\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\lp\40\jl\res\anim\enterfromleft.xml
 translate;X:\School\repository\proj\AndroidApp\Pantry Inventory\Pantry Inventory\obj\Debug\90\lp\40\jl\res\anim\enterfromright.xml
