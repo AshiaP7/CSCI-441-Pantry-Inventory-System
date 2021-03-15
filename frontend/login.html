@@ -6,11 +6,11 @@
 <script src="request.js"></script>
 <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body onload="checkconnect()">
  <div class="page">
 		<div class="header">
 			<a href="index.html" id="logo"><img src="images/Pantry Inventory.png"> </a>
-				<ul id=menu>
+				<ul <ul id=menu>
 					<li class="selected"><a href="index.html">Home</a></li>
 					<li><a href="accountcreate.html">Sign Up</a></li>
 					<li><a href="login.html">Login</a></li>
@@ -19,14 +19,17 @@
 			<div class="body">
 				<div id="featured">
 					<h3>Pantry Inventory & Recipe System</h3>
-					<p>The COVID-19 pandemic has forced U.S. consumers to alter their dining 
-					habits.  While Americans still use restaurant delivery
-					services such as GrubHub and EatStreet, more than half 
-					of Americans are now eschewing dining out in favor of 
-					cooking and baking at home. </p>
-					<input type="button" value="Sign Up" onClick="parent.location='accountcreate.html'"/>
+					<p><form action='php/login.php' method=post id=myform> 
+							Login-Name: 
+							<input name='email' type='text' maxlength=100>
+							<br>
+							Password: 
+							<input name='password' type='password' maxlength=24>
+							<br>
+					<input type="submit" value="Sign on"/>
+					</p>
 				</div>
-<ul class="signup">
+				<ul class="signup">
 					<li>
 						<div>
 							<img src="images/pastries.jpg" alt=""/>
@@ -51,14 +54,10 @@
 				<ul>
 					<li><a href="index.html">Home</a></li>
 					<li><a href="accountcreate.html">Sign Up</a></li>
-					<li><a href="login.html">Login</a></li>
+					<li><a href="#">Login</a></li>
 				</ul>
 				<p>&#169; Copyright &#169; 2021. Pantry Inventory System all rights reserved</p>
 			</div>
 		</div>
-<div id='showingredients'></div><br>
-<div id='showsteps'></div>
-<br>
-<div id='showurl'></div>
 </body>
 </html>

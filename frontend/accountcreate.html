@@ -10,18 +10,18 @@
  <div class="page">
 		<div class="header">
 			<a href="index.html" id="logo"><img src="images/Pantry Inventory.png"> </a>
-				<ul>
+				<ul id=menu>
 					<li class="selected"><a href="index.html">Home</a></li>
 					<li><a href="accountcreate.html">Sign Up</a></li>
-					<li><a href="#">Login</a></li>
+					<li><a href="login.html">Login</a></li>
 				</ul>
 			</div>
 			<div class="body">
 				<div id="featured">
 					<h3>Pantry Inventory & Recipe System</h3>
 					<p><form action='php/createaccount.php' method=post> 
-							Login-Name: 
-							<input name='username' type='text' maxlength=15>
+							Email: 
+							<input name='email' type='text' maxlength=100>
 							<br>
 							Password: 
 							<input name='password' type='password' maxlength=24>
@@ -29,16 +29,7 @@
 							Re-Password:
 							<input name='passrep' type='password' maxlength=24>
 							<br>
-							Email:
-							<input name='email' type='text'>
-							<br>
-							Question:
-							<input name='question' type='text' maxlength=24>
-							<br>
-							Answer:
-							<input name='answer' type='text' maxlength=24>
-							<br>
-					<input type="button" value="Sign Up" action="php/createaccount.php"/>
+					<input type="submit" value="Sign Up"/>
 					</p>
 				</div>
 				<ul class="signup">

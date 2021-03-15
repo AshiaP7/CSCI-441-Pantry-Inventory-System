@@ -102,10 +102,40 @@ $.upcquery = function(upc) {
 		}
 	});
 }
-
-
 });
+
+//note this is a body onload function
+$.checkconnection = function() {
+	$.ajax({ 
+		type: "GET",
+		url: "php/login.php",
+		dataType: 'json',
+		success: function(data) {
+			if(data.result == true) {
+				$("#featured").html("you are already signed in. maybe just show search bar or account info here.");
+				$("#menu").append("<li><a href='javascript:logoff();'>Sign Out</a></li>");
+			}
+		}
+	});	
 };
+
+$.logoff = function() {
+	$.ajax({ 
+		type: "GET",
+		url: "php/login.php?logoff=1",
+		dataType: 'json',
+		success: function(data) {
+			if(data.result == true) $("#featured").html("signed off");
+			else $("#featured").html("failed to signed off");
+		}
+	});	
+};
+
+};
+
+function checkconnect() {
+	$.checkconnection();
+}
 
 function get_step(id) {
 	$.stepbystep(id);

@@ -7,25 +7,30 @@ define("mysqlpass", "password");
 
 class useraccount {
 	private $email;
-	public function __construct($email = null, $pw = null) {
+	public $validation;
+	public function __construct($email = null, $pw = null, $newuser = false) {
 		//if user and pw  not null get from session vars
 		if($email != null || $pw != null) {
-			if($this->verifyuser($email, $pw) == true) {
+			if($newuser == true) {
+				$this->createAccount($email, $pw);
+			}
+			else if($this->verifyuser($email, $pw) == true) {
 				session_start();
 				$_SESSION['email'] = $email;
 				$_SESSION['start'] = time(); // saving a time stamp for timeouts
 				$this->email = $email;
-				return true;
+				$this->validation = true;
 			}
 			else {
-				return false;
+				echo "Invalid user creds";
+				$this->validation = false;
 			}
 		}
-		else {
+		else if($newuser == false) {
 			if(isset($_SESSION['email'])) {
 				session_start();
 				$this->email = $_SESSION['email'];
-				return true;
+				$this->validation = true;
 			}
 		}
 		//new signin
@@ -42,7 +47,7 @@ class useraccount {
 			$obj = $result->fetch_object();
 			$email=$obj->email;
 			$password=$obj->password;
-			if(($email == $lemail) && (password_verify($password, $lpassword) == true)) {
+			if(($email == $lemail) && (password_verify($lpassword, $password) == true)) {
 				$mysqli->close();
 				return true;
 			}
@@ -86,7 +91,7 @@ class useraccount {
 		$mysqli->close();
 		
 		$hashemail = hash('sha256', $email, false);
-		$mailcontent = "Please confirm your email address by clicking the link: <a href='http://hbprophecy.com/school/php/mailconfirm.php?user=$username&key=$hashemail'>http://hbprophecy.com/school/php/mailconfirm.php?user=$username&key=$hashemail</a>";
+		$mailcontent = "Please confirm your email address by clicking the link: <a href='http://hbprophecy.com/school/php/mailconfirm.php?user=$email&key=$hashemail'>http://hbprophecy.com/school/php/mailconfirm.php?user=$email&key=$hashemail</a>";
 		SendEmail($email, $mailcontent);
 	}
 	public function updateaccount($email, $password) {
