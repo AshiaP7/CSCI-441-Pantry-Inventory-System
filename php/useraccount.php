@@ -10,16 +10,22 @@ class useraccount {
 	public function __construct($email = null, $pw = null) {
 		//if user and pw  not null get from session vars
 		if($email != null || $pw != null) {
-			if(verifyuser($email, $password) == true) {
+			if($this->verifyuser($email, $pw) == true) {
 				session_start();
 				$_SESSION['email'] = $email;
 				$_SESSION['start'] = time(); // saving a time stamp for timeouts
 				$this->email = $email;
+				return true;
+			}
+			else {
+				return false;
 			}
 		}
 		else {
 			if(isset($_SESSION['email'])) {
+				session_start();
 				$this->email = $_SESSION['email'];
+				return true;
 			}
 		}
 		//new signin
@@ -34,7 +40,7 @@ class useraccount {
 		  $query = "SELECT * FROM account WHERE email = '$lemail'";
 			$result = $mysqli->query($query);
 			$obj = $result->fetch_object();
-			$email=$obj->username;
+			$email=$obj->email;
 			$password=$obj->password;
 			if(($email == $lemail) && (password_verify($password, $lpassword) == true)) {
 				$mysqli->close();
