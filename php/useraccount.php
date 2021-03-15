@@ -9,12 +9,55 @@ class useraccount {
 	private $email;
 	public function __construct($email = null, $pw = null) {
 		//if user and pw  not null get from session vars
+		if($email != null || $pw != null) {
+			if(verifyuser($email, $password) == true) {
+				session_start();
+				$_SESSION['email'] = $email;
+				$_SESSION['start'] = time(); // saving a time stamp for timeouts
+				$this->email = $email;
+			}
+		}
+		else {
+			if(isset($_SESSION['email'])) {
+				$this->email = $_SESSION['email'];
+			}
+		}
 		//new signin
 	}
+	private function verifyuser($lemail, $lpassword) { //bool return
+		$mysqli = mysqli_connect(mysqlip, mysqluser, mysqlpass, "school");
+		  if($mysqli->connect_errno) {
+			echo "There was a problem connecting to server. Contact Admin.";
+			//Throw error here
+			return false;
+		  }
+		  $query = "SELECT * FROM account WHERE email = '$lemail'";
+			$result = $mysqli->query($query);
+			$obj = $result->fetch_object();
+			$email=$obj->username;
+			$password=$obj->password;
+			if(($email == $lemail) && (password_verify($password, $lpassword) == true)) {
+				$mysqli->close();
+				return true;
+			}
+			$mysqli->close();
+			return false;
+	}
+	
+	public function signoff() {
+		session_start(); //some reason php needs a start session before destroy session even when one has been created.
+		session_destroy(); //destroy session
+		if(!isset($_SESSION['email'])) {
+			
+			return true;
+		} else return false;
+	}
+	
 	public function createAccount($email, $password) {
 		$mysqli = mysqli_connect(mysqlip, mysqluser, mysqlpass, "school");
 		if($mysqli->connect_errno) {
-		  die("There was a problem connecting to server. Contact Admin.");
+		  echo "There was a problem connecting to server. Contact Admin.";
+		  return;
 		}
 		//------------check if user exist-------//
 		$query = "SELECT * FROM account WHERE email = '$email'";
@@ -40,7 +83,7 @@ class useraccount {
 		$mailcontent = "Please confirm your email address by clicking the link: <a href='http://hbprophecy.com/school/php/mailconfirm.php?user=$username&key=$hashemail'>http://hbprophecy.com/school/php/mailconfirm.php?user=$username&key=$hashemail</a>";
 		SendEmail($email, $mailcontent);
 	}
-	public function updateaccount() {
+	public function updateaccount($email, $password) {
 
 	}
 }
