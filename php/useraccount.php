@@ -27,8 +27,8 @@ class useraccount {
 			}
 		}
 		else if($newuser == false) {
+			session_start();
 			if(isset($_SESSION['email'])) {
-				session_start();
 				$this->email = $_SESSION['email'];
 				$this->validation = true;
 			}
@@ -57,6 +57,7 @@ class useraccount {
 	
 	public function signoff() {
 		session_start(); //some reason php needs a start session before destroy session even when one has been created.
+		session_unset();
 		session_destroy(); //destroy session
 		if(!isset($_SESSION['email'])) {
 			

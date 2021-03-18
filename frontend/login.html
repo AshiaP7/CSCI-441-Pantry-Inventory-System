@@ -13,13 +13,13 @@
 				<ul <ul id=menu>
 					<li class="selected"><a href="index.html">Home</a></li>
 					<li><a href="accountcreate.html">Sign Up</a></li>
-					<li><a href="login.html">Login</a></li>
+					<li id="loginlink"><a href="login.html">Login</a></li>
 				</ul>
 			</div>
 			<div class="body">
 				<div id="featured">
 					<h3>Pantry Inventory & Recipe System</h3>
-					<p><form action='php/login.php' method=post id=myform> 
+					<p><form action='php/login.php' method=post id=signonfrm> 
 							Login-Name: 
 							<input name='email' type='text' maxlength=100>
 							<br>
@@ -27,6 +27,7 @@
 							<input name='password' type='password' maxlength=24>
 							<br>
 					<input type="submit" value="Sign on"/>
+					</form>
 					</p>
 				</div>
 				<ul class="signup">

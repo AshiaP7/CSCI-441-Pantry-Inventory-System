@@ -112,8 +112,7 @@ $.checkconnection = function() {
 		dataType: 'json',
 		success: function(data) {
 			if(data.result == true) {
-				$("#featured").html("you are already signed in. maybe just show search bar or account info here.");
-				$("#menu").append("<li><a href='javascript:logoff();'>Sign Out</a></li>");
+				$("#loginlink").html("<a href='javascript:logoff();'>Sign Out</a>");
 			}
 		}
 	});	
@@ -125,16 +124,36 @@ $.logoff = function() {
 		url: "php/login.php?logoff=1",
 		dataType: 'json',
 		success: function(data) {
-			if(data.result == true) $("#featured").html("signed off");
-			else $("#featured").html("failed to signed off");
+			if(data.result == true) {
+				$("#loginlink").html("<a href='login.html'>Login</a>");
+				$(".body").prepend("<em><font color=green>Sign off success</font></em>");
+			}
+			else $(".body").prepend("failed to signed off");
 		}
 	});	
 };
+
+$("#signonfrm").submit(function(e) {
+	e.preventDefault();
+	var form = $(this);
+	var url = form.attr('action');
+	$.ajax({ 
+		type: "POST",
+		url: url,
+		data: form.serialize(),
+		success: function(data) {
+			$("#featured").html(data);
+		}
+	});	
+});
 
 };
 
 function checkconnect() {
 	$.checkconnection();
+}
+function logoff() {
+	$.logoff();
 }
 
 function get_step(id) {

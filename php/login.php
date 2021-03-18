@@ -1,5 +1,6 @@
 <?
 include "useraccount.php";
+error_reporting(E_ERROR | E_PARSE);
 if($_POST) {
 if(!isset($_POST['email'])) die("invalid email");
 if(!isset( $_POST['password'])) die("Invalid password input");
@@ -11,14 +12,16 @@ $useraccount = new useraccount($email, $password);
 if($useraccount->validation == false) {
 die("Sign in failed");
 }
-echo "Sign in Success";
+echo "Sign in success";
+//header("Refresh:0 url=" . $_SERVER['HTTP_REFERER']);
+//echo $_SERVER['HTTP_REFERER'];
 }
 else {
 	if(isset($_GET['logoff'])) {
 		header("Content-Type: application/json");
 		$useraccount = new useraccount();
 		$value = false;
-		if($useraccount->validation != false) {
+		if($useraccount->validation == true) {
 			if($useraccount->signoff() == true)  $value = true;
 		}
 		
@@ -33,6 +36,7 @@ else {
 		else $value = true;
 		$buildjson = array("result"=>$value);
 		echo json_encode($buildjson);
+		
 	}
 }
 ?>
