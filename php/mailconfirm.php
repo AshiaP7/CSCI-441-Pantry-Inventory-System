@@ -6,13 +6,13 @@ define("mysqlpass", "password");
 if(isset($_GET['key']) && isset($_GET['user'])){
 	//unhash maybe just hash the username?
 	//$account=unhashedkey
-	$username = $_GET['user'];
+	$email = $_GET['user'];
 	$chash = $_GET['key'];
 	$mysqli = mysqli_connect(mysqlip, mysqluser, mysqlpass, "school");
   if($mysqli->connect_errno) {
 	die("There was a problem connecting to server. Contact Admin.");
   }
-  $query = "SELECT account * WHERE username = $username";
+  $query = "SELECT account * WHERE email = $email";
   $result = $mysqli->query($query);
   if($result) {
 	$num=$result->num_rows;
@@ -24,7 +24,7 @@ if(isset($_GET['key']) && isset($_GET['user'])){
 	if($ehash != $chash)  { die("failed to confirm email."); $mysqli->close(); } //emails key do not mach
   }
   
-  $query = "UPDATE account SET emailconfirmed = 1 WHERE username = '$username';";
+  $query = "UPDATE account SET emailconfirmed = 1 WHERE email = '$email';";
   $result = $mysqli->query($query);
   if($result) {
 	  echo "Account email has been confirmed";

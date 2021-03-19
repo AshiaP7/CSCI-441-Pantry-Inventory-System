@@ -22,7 +22,8 @@ class useraccount {
 				$this->validation = true;
 			}
 			else {
-				echo "Invalid user creds";
+				//echo "Invalid user creds";
+				//throw code here for debug
 				$this->validation = false;
 			}
 		}
@@ -39,7 +40,7 @@ class useraccount {
 		$mysqli = mysqli_connect(mysqlip, mysqluser, mysqlpass, "school");
 		  if($mysqli->connect_errno) {
 			echo "There was a problem connecting to server. Contact Admin.";
-			//Throw error here
+			//Throw error here instead of output
 			return false;
 		  }
 		  $query = "SELECT * FROM account WHERE email = '$lemail'";

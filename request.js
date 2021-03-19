@@ -142,8 +142,20 @@ $("#signonfrm").submit(function(e) {
 		url: url,
 		data: form.serialize(),
 		success: function(data) {
-			$("#featured").html(data);
-		}
+			if(data.result == true) {
+				$("#featured").html(data.msg);
+				$("#loginlink").html("<a href='javascript:logoff();'>Sign Out</a>");
+			}
+			else {
+				//$("#featured").prepend(data.msg + "<br>");
+				//have login fail message show and delete after so long.
+				$("#loginlink").html("<a href='login.html'>Login</a>");
+			}
+		},
+		error: function (xhr, ajaxOptions, thrownError){
+			alert(xhr.statusText);
+			alert(thrownError);
+		}   
 	});	
 });
 

@@ -1,6 +1,22 @@
 <?
 include "useraccount.php";
 error_reporting(E_ERROR | E_PARSE);
+
+class jsonobj {
+	private $result;
+	private $msg;
+	public function __construct($result, $msg) {
+		$this->result = $result;
+		$this->msg = $msg;
+	}
+	public function jsonSerialize() {
+		return [
+			'result' => $this->result,
+			'msg' => $this->msg
+		];
+	}
+}
+
 if($_POST) {
 if(!isset($_POST['email'])) die("invalid email");
 if(!isset( $_POST['password'])) die("Invalid password input");
@@ -10,11 +26,16 @@ $password = $_POST['password'];
 $useraccount = new useraccount($email, $password);
 
 if($useraccount->validation == false) {
-die("Sign in failed");
+	header("Content-Type: application/json");
+	$obj = new jsonobj(false, "sign on failed for this reason."); //maybe have class throw error messages to here.
+	//json here for failed login
+	echo json_encode($obj->jsonSerialize());
+	exit();
 }
-echo "Sign in success";
-//header("Refresh:0 url=" . $_SERVER['HTTP_REFERER']);
-//echo $_SERVER['HTTP_REFERER'];
+header("Content-Type: application/json");
+$obj = new jsonobj(true, "sign on success");
+//json here for success login + message
+echo json_encode($obj->jsonSerialize());
 }
 else {
 	if(isset($_GET['logoff'])) {
