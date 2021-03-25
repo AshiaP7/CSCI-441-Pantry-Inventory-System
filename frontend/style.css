@@ -320,4 +320,42 @@ body{
 	margin:6px 0 0 135px;
 }
 
+/*------------------------- Media Queries ------------------------*/ 
 
+@media only screen and (max-device-width: 480px) {
+	
+		div#mobile {
+			width: 400px;
+			
+		}
+		
+		div#mobile a#logo {
+			display: none;
+		}
+        
+		div#mobile div#featured {
+			background: none;
+			width: 400px;
+		}
+		
+		div#mobile div#featured p {
+			font-size: 28px;
+		
+		}
+		
+		div#mobile div#featured input{
+			font-size: 30px;
+		}
+		
+		
+        div#mobileheader ul {
+			
+			float: left;
+		}
+	
+		div#mobileheader li a{
+			font-size: 30px;
+		}
+		
+        
+    }
