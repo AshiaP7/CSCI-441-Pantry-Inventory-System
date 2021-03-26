@@ -112,7 +112,7 @@ $.checkconnection = function() {
 		dataType: 'json',
 		success: function(data) {
 			if(data.result == true) {
-				$("#loginlink").html("<a href='javascript:logoff();'>Sign Out</a>");
+				$("#menu").html("<li class='selected'><a href='index.html'>Home</a></li><li><a href='accountcreate.html'>My Recipes</a></li><li><a href='accountcreate.html'>My Inventory</a></li><li><a href='accountcreate.html'>Account Info</a></li><li id='loginlink'><a href='javascript:logoff();'>Sign out</a></li>");
 			}
 		}
 	});	
@@ -125,7 +125,7 @@ $.logoff = function() {
 		dataType: 'json',
 		success: function(data) {
 			if(data.result == true) {
-				$("#loginlink").html("<a href='login.html'>Login</a>");
+				$("#menu").html("<li class='selected'><a href='index.html'>Home</a></li><li><a href='accountcreate.html'>Sign Up</a></li><li id='loginlink'><a href='login.html'>Login</a></li>");
 				$(".body").prepend("<em><font color=green>Sign off success</font></em>");
 			}
 			else $(".body").prepend("failed to signed off");

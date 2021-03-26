@@ -7,6 +7,7 @@ define("mysqlpass", "password");
 
 class useraccount {
 	private $email;
+	private $accountid;
 	public $validation;
 	public function __construct($email = null, $pw = null, $newuser = false) {
 		//if user and pw  not null get from session vars
@@ -98,6 +99,29 @@ class useraccount {
 	}
 	public function updateaccount($email, $password) {
 
+	}
+	
+	public function displayinventory() {
+		if($this->validation == true) {
+			$mysqli = mysqli_connect(mysqlip, mysqluser, mysqlpass, "school");
+			if($mysqli->connect_errno) {
+			  return "Problem communicating with server. Contact Admin";
+			}
+			$query = "SELECT pantryinventory.id, pantryinventory.itemid, items.name, items.image, items.upc, pantryinventory.quantity FROM pantryinventory JOIN items ON pantryinventory.itemid = items.id WHERE pantryinventory.accountid = '$this->accountid'";
+			$result=$mysqli->query($query);
+			//loop objects and create string to output list of items.
+			$string = "";
+			while ( $row = $result->fetch_assoc() ){
+			  $name=$row["name"];
+			  $id=$row["id"];
+			  $image=$row["image"];
+			  $upc=$row["upc"];
+			  $quantity=$row["quantity"];
+			  $string .= "<img src='$image'>$upc $quantity<br>";
+			}
+			$mysqli->close();
+			return $string;
+		}
 	}
 }
 ?>
