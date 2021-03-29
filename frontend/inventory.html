@@ -1,7 +1,4 @@
-<?php
-session_start();
-	if(!isset($_SESSION['email'])) exit();
-?>
+
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -10,7 +7,7 @@ session_start();
 <script src="request.js"></script>
 <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body onload="checkconnect()">
  <div class="page">
 		<div class="header">
 			<a href="index.html" id="logo"><img src="images/Pantry Inventory.png"> </a>
@@ -22,15 +19,9 @@ session_start();
 			</div>
 			<div class="body">
 				<div id="featured">
-					<?php
-						include "php\inventory.php";
-						$account = new cInventory();
-						if($account->validation == true) {
-							//mysql and post all items here can use function in useraccount();
-							echo $account->AddToInventory('00000', 'Test', '', 5);
-						}
-						
-					?>
+				<div id="itemlist">
+				
+				</div>
 				</div>
 <ul class="signup">
 					<li>
