@@ -48,15 +48,21 @@ class useraccount {
 			$result = $mysqli->query($query);
 			$obj = $result->fetch_object();
 			$email=$obj->email;
+			$accountid = $obj->id;
 			$password=$obj->password;
 			if(($email == $lemail) && (password_verify($lpassword, $password) == true)) {
 				$mysqli->close();
+				$this->accountid = $accountid;
 				return true;
 			}
 			$mysqli->close();
 			return false;
 	}
 	
+	public function getaccountid() {
+		return $this->accountid;
+	}
+
 	public function signoff() {
 		session_start(); //some reason php needs a start session before destroy session even when one has been created.
 		session_unset();

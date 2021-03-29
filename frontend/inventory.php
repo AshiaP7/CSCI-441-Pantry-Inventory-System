@@ -23,10 +23,11 @@ session_start();
 			<div class="body">
 				<div id="featured">
 					<?php
-						include "php\useraccount.php";
-						$account = new useraccount();
+						include "php\inventory.php";
+						$account = new cInventory();
 						if($account->validation == true) {
 							//mysql and post all items here can use function in useraccount();
+							echo $account->AddToInventory('00000', 'Test', '', 5);
 						}
 						
 					?>
