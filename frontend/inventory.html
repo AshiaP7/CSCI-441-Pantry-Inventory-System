@@ -4,10 +4,15 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 		<title>Pantry Inventory System</title>
 		<link rel="stylesheet" href="style.css" />
-<script src="request.js"></script>
+<script src="request.js">
+    window.onload =  function(){
+        $.checkconnection();
+        $.displayinventory();
+    };
+</script>
 <link rel="stylesheet" href="style.css">
 </head>
-<body onload="checkconnect()">
+<body>
  <div class="page">
 		<div class="header">
 			<a href="index.html" id="logo"><img src="images/Pantry Inventory.png"> </a>
@@ -19,6 +24,11 @@
 			</div>
 			<div class="body">
 				<div id="featured">
+				<div id="submenu">
+				<ul id=submenu>
+				<li><a href="javascript:addinventory">Add Item</a></li>
+				</ul>
+				</div>
 				<div id="itemlist">
 				
 				</div>

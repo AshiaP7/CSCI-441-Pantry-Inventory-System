@@ -33,6 +33,12 @@ if($_GET){
 			$json = json_encode(array("result"=>false));
 		}
 	}
+	else if (isset($_GET['inventory'])) {
+		$inventory = new cInventory();
+		if($inventory->validation == true) {
+			$json = json_encode($inventory->GetInventory());
+		}
+	}
 	else {
 		exit();
 	}

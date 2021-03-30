@@ -65,18 +65,30 @@ class cInventory extends useraccount {
 		}
 		
 		public function GetInventory() {
+			$accountid = parent::getaccountid();
+			$data = array();
+			$data['result'] = false;
 			$mysqli = mysqli_connect(mysqlip, mysqluser, mysqlpass, "school");
 			if($mysqli->connect_errno) {
 				//echo "There was a problem connecting to server. Contact Admin.";
-				return false;
+				return $data;
 			}
-			$query = "SELECT id, upc FROM items WHERE upc = '$upc' LIMIT 1;";
+			
+			$query = "SELECT pantryinventory.id, pantryinventory.quantity, pantryinventory.accountid, items.name, items.image FROM pantryinventory INNER JOIN items ON pantryinventory.accountid = items.accountid WHERE pantryinventory.accountid = $accountid;";
 			$result=$mysqli->query($query);
-			if($result == true && $result->num_rows > 0) {
-				
+			if($result == false) {
 				$mysqli->close();
-				return false;
+				return $data;
 			}
+			$myArray = array();
+			while($row = $result->fetch_array(MYSQLI_ASSOC)) {
+				$myArray[] = $row;
+			}
+			$mysqli->close();
+			$data['result'] = true;
+			$data['item'] = $myArray;
+			return $data;
+			//loop and send data in json format.
 		}
 }
 ?>

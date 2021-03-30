@@ -112,7 +112,7 @@ $.checkconnection = function() {
 		dataType: 'json',
 		success: function(data) {
 			if(data.result == true) {
-				$("#menu").html("<li class='selected'><a href='index.html'>Home</a></li><li><a href='accountcreate.html'>My Recipes</a></li><li><a href='accountcreate.html'>My Inventory</a></li><li><a href='accountcreate.html'>Account Info</a></li><li id='loginlink'><a href='javascript:logoff();'>Sign out</a></li>");
+				$("#menu").html("<li class='selected'><a href='index.html'>Home</a></li><li><a href='accountcreate.html'>My Recipes</a></li><li><a href='accountcreate.html'>My Inventory</a></li><li><a href='accountcreate.html'>Account Info</a></li><li id='loginlink'><a href='javascript:$.logoff();'>Sign out</a></li>");
 			}
 		}
 	});	
@@ -144,7 +144,7 @@ $("#signonfrm").submit(function(e) {
 		success: function(data) {
 			if(data.result == true) {
 				$("#featured").html(data.msg);
-				$("#loginlink").html("<a href='javascript:logoff();'>Sign Out</a>");
+				$("#loginlink").html("<a href='javascript:$.logoff();'>Sign Out</a>");
 			}
 			else {
 				//$("#featured").prepend(data.msg + "<br>");
@@ -159,14 +159,26 @@ $("#signonfrm").submit(function(e) {
 	});	
 });
 
-};
+	$.displayinventory = function () {
+			$.ajax({ 
+				type: "GET",
+				url: "php/request.php?inventory=1",
+				dataType: 'json',
+				success: function(data) {
+					if(data.result == true) {
+						$("#itemlist").html("<table>");
+						//loop json array return.
+						$("#itemlist").append(
+							"<tr><td><a href='php/request.php?inventory=1&item=" + data.itemid + "'>" + data.name + "</a></td><td>" + data.upc + "</td><td><input id=quantitychange type=number min=0 max=110 value = '" + data.quantity + 
+							"'><button onclick='increment()'>+</button><button onclick='decrement()'>-</button></td></tr>"
+						);
+					}
+					else $(".body").prepend("failed to signed off");
+				}
+			});	
+	};
 
-function checkconnect() {
-	$.checkconnection();
-}
-function logoff() {
-	$.logoff();
-}
+};
 
 function get_step(id) {
 	$.stepbystep(id);
