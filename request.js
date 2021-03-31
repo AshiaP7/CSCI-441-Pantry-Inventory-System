@@ -168,10 +168,13 @@ $("#signonfrm").submit(function(e) {
 					if(data.result == true) {
 						$("#itemlist").html("<table>");
 						//loop json array return.
-						$("#itemlist").append(
-							"<tr><td><a href='php/request.php?inventory=1&item=" + data.itemid + "'>" + data.name + "</a></td><td>" + data.upc + "</td><td><input id=quantitychange type=number min=0 max=110 value = '" + data.quantity + 
-							"'><button onclick='increment()'>+</button><button onclick='decrement()'>-</button></td></tr>"
-						);
+						$.each(data.item, function(i, item) {
+							$("#itemlist").append("<tr><td><a href='php/request.php?inventory=1&item=" + data.item[i].itemid + "'>" + data.item[i].name + "</a></td><td>" + data.item[i].upc + "</td><td><input id=quantitychange type=number min=0 max=110 value = '" + data.item[i].quantity + 
+								"'></td></tr>"
+							);
+							$("#itemslist").append("</table>");
+						});
+						
 					}
 					else $(".body").prepend("failed to signed off");
 				}
