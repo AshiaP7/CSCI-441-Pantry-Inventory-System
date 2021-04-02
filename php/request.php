@@ -51,7 +51,7 @@ else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	if(isset($_POST['itemname'])) {
 			$inventory = new cInventory();
 			if($inventory->validation == true) {
-				$inventory->AddToInventory($_POST['upc'], $_POST['itemname'], $_POST['image'], $_POST['quantity']);
+				echo json_encode($inventory->AddToInventory($_POST['upc'], $_POST['itemname'], $_POST['image'], $_POST['quantity']));
 			}
 	}
 	else {

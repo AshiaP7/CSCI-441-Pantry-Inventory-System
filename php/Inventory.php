@@ -11,10 +11,12 @@ class cInventory extends useraccount {
 		
 		public function AddToInventory($upc, $name, $image, $quantity) {
 			$accountid = parent::getaccountid();
+			$data = array();
+			$data['result'] = false;
 			$mysqli = mysqli_connect(mysqlip, mysqluser, mysqlpass, "school");
 			if($mysqli->connect_errno) {
 				//echo "There was a problem connecting to server. Contact Admin.";
-				return "There was a problem connecting to server. Contact Admin.";
+				return $data;
 			}
 			$query = "SELECT id, upc FROM items WHERE upc = '$upc' LIMIT 1;";
 			$result=$mysqli->query($query);
@@ -31,13 +33,14 @@ class cInventory extends useraccount {
 				$result=$mysqli->query($query);
 				
 				$mysqli->close();
-				return "There was a problem connecting to server. Contact Admin Error #2 ($accountid, $itemid, $quantity).";
+				if($result == true) $data['result'] = true;
+				return $data;
 			}
 			
 			/*This query only runs if Item does not exist in items table or pantryinventory -> note it shouldnt be-able to exist
 				in pantryinventory if it does not in items table because of the FK restriction CASCAD to itemid on table pantryinventory.
 			*/
-			$query = "INSERT INTO items (upc, name, image, accountid)  VALUES ('$upc', '$name', '$image', '$accountid');
+			$query = "INSERT INTO items (upc, name, image)  VALUES ('$upc', '$name', '$image');
 			INSERT INTO pantryinventory (accountid, itemid, quantity) VALUES('$accountid', LAST_INSERT_ID(), '$quantity');";
 			$mysqli->multi_query($query);
 			do {
@@ -52,7 +55,8 @@ class cInventory extends useraccount {
 				}
 			} while($mysqli->next_result());
 			$mysqli->close();
-			return true;
+			$data['result'] = true;
+			return $data;
 		}
 		
 		public function RemoveFromInventory() {
@@ -73,7 +77,7 @@ class cInventory extends useraccount {
 				return $data;
 			}
 			
-			$query = "SELECT pantryinventory.id, pantryinventory.quantity, pantryinventory.accountid, items.name, items.image, items.upc FROM pantryinventory INNER JOIN items ON pantryinventory.accountid = items.accountid WHERE pantryinventory.accountid = $accountid;";
+			$query = "SELECT pantryinventory.id, pantryinventory.quantity, pantryinventory.accountid, items.name, items.image, items.upc FROM pantryinventory INNER JOIN items ON pantryinventory.itemid = items.id WHERE pantryinventory.accountid = $accountid;";
 			$result=$mysqli->query($query);
 			$data['accid'] = $this->getaccountid();
 			if($result == false) {
