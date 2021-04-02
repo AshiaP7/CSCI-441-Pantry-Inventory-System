@@ -1,10 +1,11 @@
 <?
 /*
 script will only allow get from suggested domain and then request JSON from spoonacular and relay back to client.
+script handle json
 */
 include "Inventory.php";
 header("Content-Type: application/json");
-error_reporting(0); //need no post of warnings or errors as it could changes the json output
+//error_reporting(0); //need no post of warnings or errors as it could changes the json output
 $apikey = "fbd4007d4eae44aebd9d387fc1a9292c"; //your api key here
 $allowed = array('hbprophecy.com', '192.168.0.2', '127.0.0.1'); //allowed domains
 $domainname = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST);
@@ -13,7 +14,7 @@ $domainname = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST);
 	echo json_encode(array("results" => 'false'));
 	exit();
 }*/
-if($_GET){
+if($_SERVER['REQUEST_METHOD'] === 'GET'){
 	if(isset($_GET['search'])) {
 		$json = file_get_contents("https://api.spoonacular.com/recipes/search?apiKey=" . $apikey . "&query=" . urlencode($_GET['search']));
 	}
@@ -44,4 +45,27 @@ if($_GET){
 	}
 	echo $json;
 }
+//post request
+else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+	
+	if(isset($_POST['itemname'])) {
+			$inventory = new cInventory();
+			if($inventory->validation == true) {
+				$inventory->AddToInventory($_POST['upc'], $_POST['itemname'], $_POST['image'], $_POST['quantity']);
+			}
+	}
+	else {
+		//get json data
+		$data = json_decode(file_get_contents('php://input'), true);
+		if($data['posttype'] == "updateinv") {
+			$inventory = new cInventory();
+			if($inventory->validation == true) {
+				$json = json_encode($inventory->updateInventory($data['id'], $data['value']));
+				echo $json;
+			}
+			else echo json_encode(array("error"=>"validation failed"));
+		}
+		else echo json_encode(array("result"=>false));
+	}
+} else echo json_encode(array("error"=>"no post or get "));
 ?>

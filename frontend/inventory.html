@@ -5,10 +5,6 @@
 		<title>Pantry Inventory System</title>
 		<link rel="stylesheet" href="style.css" />
 <script src="request.js">
-    window.onload =  function(){
-        $.checkconnection();
-        $.displayinventory();
-    };
 </script>
 <link rel="stylesheet" href="style.css">
 </head>
@@ -24,9 +20,17 @@
 			</div>
 			<div class="body">
 				<div id="featured">
+				<div id="displaymsg"></div>
+				<form action='php/request.php' method="post" id="additemfrm" style="display: none;"> 
+					Item-Name: <input name='itemname' type='text' maxlength=100><br>
+					UPC: <input name='upc' type='text' maxlength=100><br>
+					Image-Link: <input name='image' type='text' maxlength=100><br>
+					Quantity: <input name='quantity' type='text' maxlength=100><br>
+					<input type="submit" value="Add"/>
+				</form>
 				<div id="submenu">
 				<ul id=submenu>
-				<li><a href="javascript:addinventory">Add Item</a></li>
+				<li><a id="addlink" href="javascript:$.displayitemadd()">Add Item</a></li>
 				</ul>
 				</div>
 				<div id="itemlist">

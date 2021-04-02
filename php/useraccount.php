@@ -18,6 +18,7 @@ class useraccount {
 			else if($this->verifyuser($email, $pw) == true) {
 				session_start();
 				$_SESSION['email'] = $email;
+				$_SESSION['accid'] = $this->accountid;
 				$_SESSION['start'] = time(); // saving a time stamp for timeouts
 				$this->email = $email;
 				$this->validation = true;
@@ -32,6 +33,7 @@ class useraccount {
 			session_start();
 			if(isset($_SESSION['email'])) {
 				$this->email = $_SESSION['email'];
+				$this->accountid = $_SESSION['accid'];
 				$this->validation = true;
 			}
 		}
@@ -51,8 +53,8 @@ class useraccount {
 			$accountid = $obj->id;
 			$password=$obj->password;
 			if(($email == $lemail) && (password_verify($lpassword, $password) == true)) {
-				$mysqli->close();
 				$this->accountid = $accountid;
+				$mysqli->close();
 				return true;
 			}
 			$mysqli->close();

@@ -6,12 +6,11 @@ class cInventory extends useraccount {
 		private $Name;
 		
 		public function __construct() {
-			return parent::__construct();
+			parent::__construct();
 		}
 		
 		public function AddToInventory($upc, $name, $image, $quantity) {
-			//$accountid = parent::getaccountid();
-			$accountid = 6;
+			$accountid = parent::getaccountid();
 			$mysqli = mysqli_connect(mysqlip, mysqluser, mysqlpass, "school");
 			if($mysqli->connect_errno) {
 				//echo "There was a problem connecting to server. Contact Admin.";
@@ -74,9 +73,11 @@ class cInventory extends useraccount {
 				return $data;
 			}
 			
-			$query = "SELECT pantryinventory.id, pantryinventory.quantity, pantryinventory.accountid, items.name, items.image FROM pantryinventory INNER JOIN items ON pantryinventory.accountid = items.accountid WHERE pantryinventory.accountid = $accountid;";
+			$query = "SELECT pantryinventory.id, pantryinventory.quantity, pantryinventory.accountid, items.name, items.image, items.upc FROM pantryinventory INNER JOIN items ON pantryinventory.accountid = items.accountid WHERE pantryinventory.accountid = $accountid;";
 			$result=$mysqli->query($query);
+			$data['accid'] = $this->getaccountid();
 			if($result == false) {
+				//$data['mysql'] = $mysqli->error; //remove may just have a local log.
 				$mysqli->close();
 				return $data;
 			}
@@ -89,6 +90,25 @@ class cInventory extends useraccount {
 			$data['item'] = $myArray;
 			return $data;
 			//loop and send data in json format.
+		}
+		public function updateInventory($id, $value) {
+			$data = array();
+			$data['result'] = false;
+			if($this->validation == false) return $data;
+			$mysqli = mysqli_connect(mysqlip, mysqluser, mysqlpass, "school");
+			if($mysqli->connect_errno) {
+				return $data;
+			}
+			if($value > 0) $query = "UPDATE pantryinventory SET quantity = '$value' WHERE id = $id;";
+			else $query = "DELETE FROM pantryinventory WHERE id = $id;";
+			$result=$mysqli->query($query);
+			if($result == false) {
+				$mysqli->close();
+				return $data;
+			}
+			$mysqli->close();
+			$data['result'] = true;
+			return $data;
 		}
 }
 ?>

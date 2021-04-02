@@ -112,7 +112,7 @@ $.checkconnection = function() {
 		dataType: 'json',
 		success: function(data) {
 			if(data.result == true) {
-				$("#menu").html("<li class='selected'><a href='index.html'>Home</a></li><li><a href='accountcreate.html'>My Recipes</a></li><li><a href='accountcreate.html'>My Inventory</a></li><li><a href='accountcreate.html'>Account Info</a></li><li id='loginlink'><a href='javascript:$.logoff();'>Sign out</a></li>");
+				$("#menu").html("<li class='selected'><a href='index.html'>Home</a></li><li><a href='accountcreate.html'>My Recipes</a></li><li><a href='inventory.html'>My Inventory</a></li><li><a href='accountcreate.html'>Account Info</a></li><li id='loginlink'><a href='javascript:$.logoff();'>Sign out</a></li>");
 			}
 		}
 	});	
@@ -144,12 +144,36 @@ $("#signonfrm").submit(function(e) {
 		success: function(data) {
 			if(data.result == true) {
 				$("#featured").html(data.msg);
-				$("#loginlink").html("<a href='javascript:$.logoff();'>Sign Out</a>");
+				$("#menu").html("<li class='selected'><a href='index.html'>Home</a></li><li><a href='accountcreate.html'>My Recipes</a></li><li><a href='inventory.html'>My Inventory</a></li><li><a href='accountcreate.html'>Account Info</a></li><li id='loginlink'><a href='javascript:$.logoff();'>Sign out</a></li>");
 			}
 			else {
 				//$("#featured").prepend(data.msg + "<br>");
 				//have login fail message show and delete after so long.
+				$("#featured").prepend(data.msg + "<br>");
 				$("#loginlink").html("<a href='login.html'>Login</a>");
+			}
+		},
+		error: function (xhr, ajaxOptions, thrownError){
+			alert(xhr.statusText);
+			alert(thrownError);
+		}   
+	});	
+});
+//submitform ajax
+$("#additemfrm").submit(function(e) {
+	e.preventDefault();
+	var form = $(this);
+	var url = form.attr('action');
+	$.ajax({ 
+		type: "POST",
+		url: url,
+		data: form.serialize(),
+		success: function(data) {
+			if(data.result == true) {
+				$("#displaymsg").html("Item Added");
+			}
+			else {
+				$("#displaymsg").html("Failed to add item. May already exist");
 			}
 		},
 		error: function (xhr, ajaxOptions, thrownError){
@@ -166,20 +190,73 @@ $("#signonfrm").submit(function(e) {
 				dataType: 'json',
 				success: function(data) {
 					if(data.result == true) {
-						$("#itemlist").html("<table>");
+						$("#itemlist").html("<table id='itemlisttb' width='100%'>");
 						//loop json array return.
 						$.each(data.item, function(i, item) {
-							$("#itemlist").append("<tr><td><a href='php/request.php?inventory=1&item=" + data.item[i].itemid + "'>" + data.item[i].name + "</a></td><td>" + data.item[i].upc + "</td><td><input id=quantitychange type=number min=0 max=110 value = '" + data.item[i].quantity + 
-								"'></td></tr>"
+							$("#itemlist").append("<tr id='tr-" + data.item[i].id + "'><td width='150'><a href='php/request.php?inventory=1&item=" + data.item[i].id + "'>" + data.item[i].name + "</a></td><td>" + data.item[i].upc + "</td><td><input style='width:50px;' id='" + data.item[i].id + "' onchange='$.oninvchange(" + data.item[i].id + ", " + data.item[i].quantity + " )' type=number min=0 max=110 value = '" + data.item[i].quantity + 
+								"'><button type='button' style='display: none;' id='update-" + data.item[i].id + "' onclick='$.Updateinventory(" + data.item[i].id + ")'>Update</button></td></tr>"
 							);
-							$("#itemslist").append("</table>");
 						});
+						$("#itemlist").append("</table>");
 						
 					}
-					else $(".body").prepend("failed to signed off");
+					else $(".body").prepend("Failed to recieve list.");
 				}
 			});	
 	};
+	
+	$.oninvchange = function (id, value) {
+		var curval = $('#' + id).val();
+		if(value != curval) {
+			$('#update-' + id).show();
+		}
+		else {
+			$('#update-' + id).hide();
+		}
+	};
+	$.Updateinventory = function (id) {
+		//alert("Test: " + id);
+		var newval = $('#' + id).val();
+		$.ajax({
+		  type: "POST",
+		  url: "php/request.php",
+		  data: JSON.stringify( {"posttype": "updateinv", "id": id, "value": newval } ),
+		  datatype: 'json',
+		  contentType: "application/json; charset=utf-8",
+		  success: function(data) {
+			  if(data.result == true) {
+				  //update success
+				  $("#displaymsg").html("Update Success");
+				  if(newval > 0) {
+					$('#' + id).attr("onchange", "$.oninvchange(" + id + ", " + newval + " )");
+				  }
+				  else (newval == 0) {
+					  $('#tr-' + id).remove();
+				  }
+				  $('#update-' + id).hide();
+			  }
+			  else {
+				  $("#displaymsg").html("Update Failed");
+				  //show unable to update.
+			  }
+		  }
+		});
+		//run ajax if success return then update the quantity input attribute onclick to reflect the updated value.
+	}
+	
+	$.displayitemadd = function() {
+		$('#additemfrm').toggle();
+		if($('#additemfrm:visible')[0]) {
+			$('#addlink').html('Close');
+		} else {
+			$('#addlink').html('Add Item');
+		}
+	}
+	
+	$.AddItemInventory = function(id) {
+		
+		$('#additemfrm').hide();
+	}
 
 };
 
