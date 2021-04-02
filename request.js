@@ -159,6 +159,8 @@ $("#signonfrm").submit(function(e) {
 		}   
 	});	
 });
+
+
 //submitform ajax
 $("#additemfrm").submit(function(e) {
 	e.preventDefault();
@@ -230,7 +232,7 @@ $("#additemfrm").submit(function(e) {
 				  if(newval > 0) {
 					$('#' + id).attr("onchange", "$.oninvchange(" + id + ", " + newval + " )");
 				  }
-				  else (newval == 0) {
+				  else if(newval == 0) {
 					  $('#tr-' + id).remove();
 				  }
 				  $('#update-' + id).hide();
