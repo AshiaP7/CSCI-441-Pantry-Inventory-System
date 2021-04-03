@@ -60,7 +60,7 @@ else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		if($data['posttype'] == "updateinv") {
 			$inventory = new cInventory();
 			if($inventory->validation == true) {
-				$json = json_encode($inventory->updateInventory($data['id'], $data['value']));
+				$json = json_encode($inventory->updateInventory($data['id'], $data['value'], $data['itemid']));
 				echo $json;
 			}
 			else echo json_encode(array("error"=>"validation failed"));

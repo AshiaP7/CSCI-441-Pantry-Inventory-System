@@ -173,6 +173,7 @@ $("#additemfrm").submit(function(e) {
 		success: function(data) {
 			if(data.result == true) {
 				$("#displaymsg").html("Item Added");
+				$.displayinventory();
 			}
 			else {
 				$("#displaymsg").html("Failed to add item. May already exist");
@@ -196,7 +197,7 @@ $("#additemfrm").submit(function(e) {
 						//loop json array return.
 						$.each(data.item, function(i, item) {
 							$("#itemlist").append("<tr id='tr-" + data.item[i].id + "'><td width='150'><a href='php/request.php?inventory=1&item=" + data.item[i].id + "'>" + data.item[i].name + "</a></td><td>" + data.item[i].upc + "</td><td><input style='width:50px;' id='" + data.item[i].id + "' onchange='$.oninvchange(" + data.item[i].id + ", " + data.item[i].quantity + " )' type=number min=0 max=110 value = '" + data.item[i].quantity + 
-								"'><button type='button' style='display: none;' id='update-" + data.item[i].id + "' onclick='$.Updateinventory(" + data.item[i].id + ")'>Update</button></td></tr>"
+								"'><button type='button' style='display: none;' id='update-" + data.item[i].id + "' onclick='$.Updateinventory(" + data.item[i].id + ", " + data.item[i].itemid + ")'>Update</button></td></tr>"
 							);
 						});
 						$("#itemlist").append("</table>");
@@ -216,13 +217,13 @@ $("#additemfrm").submit(function(e) {
 			$('#update-' + id).hide();
 		}
 	};
-	$.Updateinventory = function (id) {
+	$.Updateinventory = function (id, itemid) {
 		//alert("Test: " + id);
 		var newval = $('#' + id).val();
 		$.ajax({
 		  type: "POST",
 		  url: "php/request.php",
-		  data: JSON.stringify( {"posttype": "updateinv", "id": id, "value": newval } ),
+		  data: JSON.stringify( {"posttype": "updateinv", "id": id, "value": newval, "itemid":  itemid } ),
 		  datatype: 'json',
 		  contentType: "application/json; charset=utf-8",
 		  success: function(data) {
@@ -230,7 +231,7 @@ $("#additemfrm").submit(function(e) {
 				  //update success
 				  $("#displaymsg").html("Update Success");
 				  if(newval > 0) {
-					$('#' + id).attr("onchange", "$.oninvchange(" + id + ", " + newval + " )");
+					$('#' + id).attr("onchange", "$.oninvchange(" + id + ", " + newval + ")");
 				  }
 				  else if(newval == 0) {
 					  $('#tr-' + id).remove();

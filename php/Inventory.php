@@ -1,5 +1,6 @@
 <?php
 include "useraccount.php";
+include_once 'PHPHTMLDOM/simple_html_dom.php';
 
 class cInventory extends useraccount {
 		private $BarCode;
@@ -18,7 +19,9 @@ class cInventory extends useraccount {
 				//echo "There was a problem connecting to server. Contact Admin.";
 				return $data;
 			}
-			$query = "SELECT id, upc FROM items WHERE upc = '$upc' LIMIT 1;";
+			$condition = "WHERE upc = '$upc'";
+			if($upc == '') $condition = "WHERE name = '$name' AND accountid = $accountid";
+			$query = "SELECT id, upc, name FROM items $condition LIMIT 1;";
 			$result=$mysqli->query($query);
 			if($result == true && $result->num_rows > 0) {
 				//echo "Test) duplicated entry";
@@ -31,16 +34,22 @@ class cInventory extends useraccount {
 				//on duplicate update the quantity.
 				$query = "INSERT INTO pantryinventory (accountid, itemid, quantity) VALUES('$accountid', '$itemid', '$quantity') ON DUPLICATE KEY UPDATE quantity=quantity + $quantity;";
 				$result=$mysqli->query($query);
-				
+				if($result == true) {
+					$data['result'] = true;
+				}
 				$mysqli->close();
-				if($result == true) $data['result'] = true;
 				return $data;
 			}
 			
-			/*This query only runs if Item does not exist in items table or pantryinventory -> note it shouldnt be-able to exist
-				in pantryinventory if it does not in items table because of the FK restriction CASCAD to itemid on table pantryinventory.
+			/*
+			verify information insert is valid with if upc code is included and item does not exist. if it can be verified then insert accountid= 0 for public use.
 			*/
-			$query = "INSERT INTO items (upc, name, image)  VALUES ('$upc', '$name', '$image');
+			/*if($upc != '') {
+				$content = file_get_html("https://www.upcdatabase.com/item/$upc");
+				$row = $content->find('tr');
+				$row[0]->
+			}*/
+			$query = "INSERT INTO items (upc, name, image, accountid)  VALUES ('$upc', '$name', '$image', '$accountid');
 			INSERT INTO pantryinventory (accountid, itemid, quantity) VALUES('$accountid', LAST_INSERT_ID(), '$quantity');";
 			$mysqli->multi_query($query);
 			do {
@@ -77,7 +86,7 @@ class cInventory extends useraccount {
 				return $data;
 			}
 			
-			$query = "SELECT pantryinventory.id, pantryinventory.quantity, pantryinventory.accountid, items.name, items.image, items.upc FROM pantryinventory INNER JOIN items ON pantryinventory.itemid = items.id WHERE pantryinventory.accountid = $accountid;";
+			$query = "SELECT pantryinventory.id, pantryinventory.quantity, pantryinventory.accountid, pantryinventory.itemid, items.name, items.image, items.upc FROM pantryinventory INNER JOIN items ON pantryinventory.itemid = items.id WHERE pantryinventory.accountid = $accountid;";
 			$result=$mysqli->query($query);
 			$data['accid'] = $this->getaccountid();
 			if($result == false) {
@@ -95,7 +104,8 @@ class cInventory extends useraccount {
 			return $data;
 			//loop and send data in json format.
 		}
-		public function updateInventory($id, $value) {
+		public function updateInventory($id, $value, $itemid) {
+			$accountid = parent::getaccountid();
 			$data = array();
 			$data['result'] = false;
 			if($this->validation == false) return $data;
@@ -103,13 +113,30 @@ class cInventory extends useraccount {
 			if($mysqli->connect_errno) {
 				return $data;
 			}
-			if($value > 0) $query = "UPDATE pantryinventory SET quantity = '$value' WHERE id = $id;";
-			else $query = "DELETE FROM pantryinventory WHERE id = $id;";
-			$result=$mysqli->query($query);
-			if($result == false) {
-				$mysqli->close();
-				return $data;
+			if($value > 0)  {
+				$query = "UPDATE pantryinventory SET quantity = '$value' WHERE id = $id;";
+				$result=$mysqli->query($query);
+				if($result == false) {
+					$mysqli->close();
+					return $data;
+				}
 			}
+			else {
+				$query = "DELETE FROM pantryinventory WHERE id = $id; DELETE IGNORE FROM items WHERE id = $itemid AND accountid = $accountid;";
+				$mysqli->multi_query($query);
+				do {
+					if($result = $mysqli->store_result()) {
+						if($result == false) {
+							//echo "There was a problem. please contact admin for help. Statment #2 $query";
+							$result->free();
+							$mysqli->close();
+							return $data;
+						}
+
+					}
+				} while($mysqli->next_result());
+			}
+
 			$mysqli->close();
 			$data['result'] = true;
 			return $data;
