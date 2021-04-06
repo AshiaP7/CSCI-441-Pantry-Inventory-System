@@ -8,14 +8,14 @@
 </script>
 <link rel="stylesheet" href="style.css">
 </head>
-<body onload="$.displayinventory();">
+<body onload="">
  <div class="page">
 		<div class="header">
 			<a href="index.html" id="logo"><img src="images/Pantry Inventory.png"> </a>
 				<ul id=menu>
 					<li><a href='home.html'>Home</a></li>
-					<li><a href='recipes.html'>My Recipes</a></li>
-					<li class='selected'><a href='inventory.html'>My Inventory</a></li>
+					<li class='selected'><a href='recipes.html'>My Recipes</a></li>
+					<li><a href='inventory.html'>My Inventory</a></li>
 					<li><a href='accountinfo.html'>Account Info</a></li>
 					<li id='loginlink'><a href='javascript:$.logoff();'>Sign out</a></li>
 				</ul>
@@ -23,15 +23,38 @@
 			<div class="body">
 				<div id="featured">
 				<div id="displaymsg"></div>
-				<form action='php/request.php' method="post" id="additemfrm" style="display: none;"> 
-					Item-Name: <input name='itemname' type='text' maxlength=100><br>
-					Quantity: <input name='quantity' type='text' maxlength=100><br>
+				<div class="submenu">
+				<ul id=submenu>
+				<li><a id="addlink" href="addrecipe.html">Add recipe</a></li>
+				<li><a id="addlink" href="javascript:$.displayfav()">Favorits</a></li>
+				<li><a id="addlink" href="javascript:$.displaydis()">Dislikes</a></li>
+				</ul>
+				<br>
+				<form action='php/request.php' method="post" id="additemfrm"> 
+					Recipe-Name: <input name='itemname' type='text' maxlength=100><br>
+					Image-Link: <input name='image' type='text' maxlength=100><br>
+					Serving Size: <input name='serving' type='text' maxlength=100><br>
+					<div id=addingredient>
+						<table id=inglist>
+							<tr><td><b>Ingredient</b></td><td><b>Measurement</b></td><td><b>Unit</b></td></tr>
+							<tr><td width=100>Sugar -small text box adjustable</td><td>1 -input adjustable</td><td>tbs -dropdown adjustable</td></tr>
+						</table>
+						Ingredient: <input name='upc' type='text' maxlength=100><br>
+						<label for "messure">Measurement:</label><input name='messure' type='text' maxlength=100><br>
+						Unit: 
+						<select name="unit" id="unitid">
+						  <option value="teaspoon">tsp</option>
+						  <option value="tablespoon">tbs</option>
+						  <option value="ounce">Fluid ounce</option>
+						  <option value="cup">cup</option>
+						  <option value="pint">pint</option>
+						  <option value="quart">quart</option>
+						  <option value="gallon">gallon</option>
+						</select><br>
+					</div>
+					Step #1:<br>
 					<input type="submit" value="Add"/>
 				</form>
-				<div id="submenu">
-				<ul id=submenu>
-				<li><a id="addlink" href="javascript:$.displayitemadd()">Add Item</a></li>
-				</ul>
 				</div>
 				<div id="itemlist">
 				

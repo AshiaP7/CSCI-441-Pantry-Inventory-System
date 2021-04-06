@@ -59,6 +59,7 @@ body{
 	outline:none;
 }
 
+
 /*------------------------- Body ------------------------*/ 
 .body{
 	width:940px;
@@ -234,6 +235,29 @@ body{
 	width:auto;
 	outline:none;
 }
+#featured .submenu ul {
+	margin:0;
+	list-style:none; 
+	padding:13px 0 0;
+	float:left;
+}
+#featured .submenu ul li {
+	float:left;
+	margin:0 0 0 43px;
+	padding:0;
+	background:none;
+}
+#featured .submenu ul li a{
+	font-size:16px;
+	text-decoration:none;
+	color:#5e5e5e;
+	font-family: 'RokkittRegular';
+	outline:none;
+}
+#featured .submenu ul li a:hover{
+	color: #AD6300;
+}
+
 .body ul li div{
 	float:left;
 	margin:0 0 0 50px;

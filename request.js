@@ -112,7 +112,7 @@ $.checkconnection = function() {
 		dataType: 'json',
 		success: function(data) {
 			if(data.result == true) {
-				$("#menu").html("<li class='selected'><a href='index.html'>Home</a></li><li><a href='accountcreate.html'>My Recipes</a></li><li><a href='inventory.html'>My Inventory</a></li><li><a href='accountcreate.html'>Account Info</a></li><li id='loginlink'><a href='javascript:$.logoff();'>Sign out</a></li>");
+				$("#menu").html("<li class='selected'><a href='home.html'>Home</a></li><li><a href='recipes.html'>My Recipes</a></li><li><a href='inventory.html'>My Inventory</a></li><li><a href='accountinfo.html'>Account Info</a></li><li id='loginlink'><a href='javascript:$.logoff();'>Sign out</a></li>");
 			}
 		}
 	});	

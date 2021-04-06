@@ -1,41 +1,30 @@
-
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 		<title>Pantry Inventory System</title>
 		<link rel="stylesheet" href="style.css" />
-<script src="request.js">
-</script>
+<script src="request.js"></script>
 <link rel="stylesheet" href="style.css">
 </head>
-<body onload="$.displayinventory();">
+<body onload="">
+<div id="mobile">
  <div class="page">
+	<div id="mobileheader">
 		<div class="header">
 			<a href="index.html" id="logo"><img src="images/Pantry Inventory.png"> </a>
 				<ul id=menu>
-					<li><a href='home.html'>Home</a></li>
+					<li class='selected'><a href='home.html'>Home</a></li>
 					<li><a href='recipes.html'>My Recipes</a></li>
-					<li class='selected'><a href='inventory.html'>My Inventory</a></li>
+					<li><a href='inventory.html'>My Inventory</a></li>
 					<li><a href='accountinfo.html'>Account Info</a></li>
 					<li id='loginlink'><a href='javascript:$.logoff();'>Sign out</a></li>
 				</ul>
 			</div>
+			</div>
 			<div class="body">
-				<div id="featured">
-				<div id="displaymsg"></div>
-				<form action='php/request.php' method="post" id="additemfrm" style="display: none;"> 
-					Item-Name: <input name='itemname' type='text' maxlength=100><br>
-					Quantity: <input name='quantity' type='text' maxlength=100><br>
-					<input type="submit" value="Add"/>
-				</form>
-				<div id="submenu">
-				<ul id=submenu>
-				<li><a id="addlink" href="javascript:$.displayitemadd()">Add Item</a></li>
-				</ul>
-				</div>
-				<div id="itemlist">
-				
-				</div>
+				<div id="featured" style="overflow-y: auto">
+					Search Recipe:<input type="text" id="searchtext"><button id="search" type="button" onclick="$.searchrequest()">Search</button><br>
+					<div id="showresults"></div>
 				</div>
 <ul class="signup">
 					<li>
@@ -67,6 +56,7 @@
 				<p>&#169; Copyright &#169; 2021. Pantry Inventory System all rights reserved</p>
 			</div>
 		</div>
+	</div>
 <div id='showingredients'></div><br>
 <div id='showsteps'></div>
 <br>
