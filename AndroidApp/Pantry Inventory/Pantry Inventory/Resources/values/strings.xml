@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Pantry Inventory</string>
 	<string name="action_BarCode">Add to Inventory by Barcode</string>
+  <string name="action_finder">Resturant Near Me</string>
 	<string name="action_settings">Settings</string>
 </resources>

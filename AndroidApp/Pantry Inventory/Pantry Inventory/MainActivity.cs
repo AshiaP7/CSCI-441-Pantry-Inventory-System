@@ -91,6 +91,12 @@ namespace Pantry_Inventory
                 OpenScanner();
                 return true;
             }
+            if (id == Resource.Id.action_finder)
+            {
+                var intentFinder = new Intent(this, typeof(FinderActivity));
+                this.StartActivity(intentFinder);
+                return true;
+            }
 
             return base.OnOptionsItemSelected(item);
         }
