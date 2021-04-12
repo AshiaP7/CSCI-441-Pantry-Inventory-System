@@ -247,6 +247,26 @@ $("#additemfrm").submit(function(e) {
 		//run ajax if success return then update the quantity input attribute onclick to reflect the updated value.
 	}
 	
+	$.displayrecipe = function() {
+		$.ajax({ 
+		type: "GET",
+		url: "php/request.php?recipe=1",
+		dataType: 'json',
+		success: function(data) {
+			if(data.result == true) {
+				$("#recipelist").html("<table id='itemlisttb' width='100%'>");
+				//loop json array return.
+				$.each(data.item, function(i, item) {
+				$("#recipelist").append("<tr><td>" . data.recipe[i].name . "</td><td>" . data.recipe[i].preptime . "</td></tr>");
+				});
+					$("#recipelist").append("</table>");
+							
+				}
+				else $(".body").prepend("Failed to recieve list.");
+			}
+		});	
+	}
+	
 	$.displayitemadd = function() {
 		$('#additemfrm').toggle();
 		if($('#additemfrm:visible')[0]) {
