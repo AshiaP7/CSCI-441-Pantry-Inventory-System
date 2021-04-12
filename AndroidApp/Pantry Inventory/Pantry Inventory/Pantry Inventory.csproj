@@ -70,6 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConfirmItem.cs" />
+    <Compile Include="FinderActivity.cs" />
     <Compile Include="Item.cs" />
     <Compile Include="ItemList.cs" />
     <Compile Include="MainActivity.cs" />
@@ -130,6 +131,11 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\ConfirmItem.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\activity_maps.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
