@@ -1,5 +1,5 @@
 <?php
-include "useraccount.php";
+include_once "useraccount.php";
 //include_once 'PHPHTMLDOM/simple_html_dom.php';
 class cingredient {
 	public $ingredient;
@@ -9,7 +9,6 @@ class cingredient {
 
 
 class cRecipelist extends useraccount {
-		private $BarCode;
 		private $Name;
 		
 		public function __construct() {
@@ -58,6 +57,31 @@ class cRecipelist extends useraccount {
 		
 		public function UpdateRecipe($id, $name, $img, $serving, $ingredient, $step) {
 			
+		}
+		public function getRecipes($fav, $dislike) {
+			$accountid = parent::getaccountid();
+			$data = array();
+			$data['result'] = false;
+			$mysqli = mysqli_connect(mysqlip, mysqluser, mysqlpass, "school");
+			if($mysqli->connect_errno) {
+				//echo "There was a problem connecting to server. Contact Admin.";
+				return $data;
+			}
+			if($fav == false && $dislike == false) {
+				$query = "SELECT * FROM recipes WHERE accountid='$accountid'";
+				$result=$mysqli->query($query);
+				if($result == false) {
+					return $data;
+				}
+				$myArray = array();
+				while($row = $result->fetch_array(MYSQLI_ASSOC)) {
+					$myArray[] = $row;
+				}
+				$mysqli->close();
+				$data['result'] = true;
+				$data['recipe'] = $myArray;
+				return $data;
+			}
 		}
 }
 ?>

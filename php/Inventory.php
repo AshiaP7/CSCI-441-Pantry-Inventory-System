@@ -1,5 +1,5 @@
 <?php
-include "useraccount.php";
+include_once "useraccount.php";
 include_once 'PHPHTMLDOM/simple_html_dom.php';
 
 class cInventory extends useraccount {

@@ -102,9 +102,49 @@ body{
 	font-family: 'RokkittRegular';
 	color:#fff;
 	font-size:20px;
-	margin:20px 0 0 130px;
+	margin:20px 0 0 10px;
 	cursor:pointer;
 	outline:none;
+}
+.body div#featured select {
+	background:url(images/interface.jpg) no-repeat;
+	border:0;
+    height:20px;
+    width:150px;
+	font-family: 'RokkittRegular';
+	color:#fff;
+	font-size:20px;
+	margin:20px 0 0 0px;
+	cursor:pointer;
+	outline:none;
+}
+
+.body div#addingredient table#inglist input {
+	background:url(images/interface.jpg) no-repeat;
+	border:0;
+    height:18px;
+    width:250px;
+	font-family: 'RokkittRegular';
+	color:#fff;
+	font-size:18px;
+	margin:0px 0 0 0px;
+	cursor:pointer;
+	outline:none;
+}
+.body div#addingredient select {
+	background:url(images/interface.jpg) no-repeat;
+	border:0;
+    height:20px;
+    width:150px;
+	font-family: 'RokkittRegular';
+	color:#fff;
+	font-size:20px;
+	margin:10px 0 10px 0px;
+	cursor:pointer;
+	outline:none;
+}
+.body div#addingredient table#inglist select {
+	margin:0px 0 0px 0px;
 }
 
 
@@ -236,11 +276,12 @@ body{
 	outline:none;
 }
 #featured .submenu ul {
-	margin:0;
+	margin:-30px;
 	list-style:none; 
-	padding:13px 0 0;
+	padding: 0 0 0;
 	float:left;
 }
+
 #featured .submenu ul li {
 	float:left;
 	margin:0 0 0 43px;
@@ -255,6 +296,9 @@ body{
 	outline:none;
 }
 #featured .submenu ul li a:hover{
+	color: #AD6300;
+}
+#featured .submenu ul li.selected a,.header ul li a:hover{
 	color: #AD6300;
 }
 

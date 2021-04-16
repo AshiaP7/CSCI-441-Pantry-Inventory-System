@@ -21,43 +21,125 @@
 				</ul>
 			</div>
 			<div class="body">
-				<div id="featured">
+				<div id="featured" style="overflow-y: auto; background-image:none;">
 				<div id="displaymsg"></div>
 				<div class="submenu">
 				<ul id=submenu>
-				<li><a id="addlink" href="addrecipe.html">Add recipe</a></li>
-				<li><a id="addlink" href="javascript:$.displayfav()">Favorits</a></li>
-				<li><a id="addlink" href="javascript:$.displaydis()">Dislikes</a></li>
+				<li><a id="recipelistadd" href="javascript:$.displayrecipefrm()">Add recipe</a></li>
+				<li><a id="dispfav" href="javascript:$.displayfav()">Favorits</a></li>
+				<li><a id="dispdis" href="javascript:$.displaydis()">Dislikes</a></li>
 				</ul>
-				<br>
-				<form action='php/request.php' method="post" id="additemfrm"> 
-					Recipe-Name: <input name='itemname' type='text' maxlength=100><br>
-					Image-Link: <input name='image' type='text' maxlength=100><br>
-					Serving Size: <input name='serving' type='text' maxlength=100><br>
+				</div>
+				<form action='php/request.php' method="post" id="addrecipefrm" style="display: none;"> 
+					Recipe-Name: <input name='itemname' id ='itemname' type='text' maxlength=100><br>
+					Image-Link: <input name='image' id='image' type='text' maxlength=100><br>
+					Serving Size: <input type="number" min=0 name='serving' id = 'serving' type='text' maxlength=100><br>
+					Prep-Time: <input type="number" min=0 name='prep-time' id='prep-time' type='text' maxlength=100><br>
+					Nationality: 
+						<select name="nationality" id="nationality">
+						  <option value="african" selected>African</option>
+						  <option value="american">American</option>
+						  <option value="british">British</option>
+						  <option value="cajun">Cajun</option>
+						  <option value="caribbean">Caribbean</option>
+						  <option value="chinese">Chinese</option>
+						  <option value="eastereuropean">Easter European</option>
+						  <option value="european">European</option>
+						  <option value="french">French</option>
+						  <option value="german">German</option>
+						  <option value="greek">Greek</option>
+						  <option value="indian">Indian</option>
+						  <option value="irish">Irish</option>
+						  <option value="italian">Italian</option>
+						  <option value="japanese">Japanese</option>
+						  <option value="jewish">Jewish</option>
+						  <option value="korean">Korean</option>
+						  <option value="latinamerican">Latin American</option>
+						  <option value="mediterranean">Mediterranean</option>
+						  <option value="mexican">Mexican</option>
+						  <option value="middleeastern">Middle Eastern</option>
+						  <option value="nordic">Nordic</option>
+						  <option value="southern">Southern</option>
+						  <option value="spanish">Spanish</option>
+						  <option value="thai">Thai</option>
+						  <option value="vietnamese">Vietnamese</option>
+						</select><br>
+					Dietary-restriction: 						
+					<select name="dietrestriction" id="dietrestriction">
+							<option value="none" selected>None</option>
+						  <option value="glutenfree">Gluten Free</option>
+						  <option value="ketogenic">Ketogenic</option>
+						  <option value="vegetarian">Vegetarian</option>
+						  <option value="lacto-vegetarian">Lacto-Vegetarian</option>
+						  <option value="ovo-vegetarian">Ovo-Vegetarian</option>
+						  <option value="vegan">Vegan</option>
+						  <option value="percetarian">Pescetarian</option>
+						  <option value="paleo">Paleo</option>
+						  <option value="primal">Primal</option>
+						  <option value="whole30">Whole30</option>
+						</select><br>
+					Food-Type: 						
+					<select name="foodtype" id="foodtype">
+						  <option value="entree" selected>Entree</option>
+						  <option value="appetizer">Appetizer</option>
+						  <option value="salad">Salad</option>
+						   <option value="dessert">Dessert</option>
+						   <option value="dessert">Soup</option>
+						</select><br>
+						<hr>
+						<h2 align=center>Ingredients</h2>
 					<div id=addingredient>
-						<table id=inglist>
-							<tr><td><b>Ingredient</b></td><td><b>Measurement</b></td><td><b>Unit</b></td></tr>
-							<tr><td width=100>Sugar -small text box adjustable</td><td>1 -input adjustable</td><td>tbs -dropdown adjustable</td></tr>
+						<br>
+						<div id=ingredientmsg></div>
+						<table id="inglist" border=1>
+						<thead>
+							<tr><th><b>Ingredient</b></th><th><b>Measurement</b></th><th><b>Unit</b></th><th><b>Update/Remove</b></th></tr>
+							</thead>
+							<tbody>
+							
+							</tbody>
 						</table>
-						Ingredient: <input name='upc' type='text' maxlength=100><br>
-						<label for "messure">Measurement:</label><input name='messure' type='text' maxlength=100><br>
+						Ingredient: <input name='ingredient' id='ingredientid' type='text' maxlength=100><br>
+						<label for "messure">Measurement:</label><input type="number" min=0 name='messure' id='messureid' type='text' maxlength=100><br>
 						Unit: 
 						<select name="unit" id="unitid">
-						  <option value="teaspoon">tsp</option>
+						  <option value="teaspoon" selected>tsp</option>
 						  <option value="tablespoon">tbs</option>
 						  <option value="ounce">Fluid ounce</option>
 						  <option value="cup">cup</option>
 						  <option value="pint">pint</option>
 						  <option value="quart">quart</option>
 						  <option value="gallon">gallon</option>
+						  <option value="whole">whole</option>
+						  <option value="piece">piece</option>
+						  <option value="loaf">loaf</option>
 						</select><br>
+						<button type="button" id="addingredientbutton" onclick="$.addingredientbutton()">Add</button>
 					</div>
-					Step #1:<br>
-					<input type="submit" value="Add"/>
+					<hr>
+					<h2 align=center>Steps</h2>
+					<br>
+					<table id="steptbl" border=1>
+					<thead>
+					<tr><th><b>Step#</b></th><th><b>preview</b></th><th><b>Update/Edit</b></th></tr>
+					</thead>
+					<tbody>
+					</tbody>
+					</table><br>
+					<p id="stepheader">Step #1:</p>
+					<textarea name="step" id="step"></textarea><br>
+					<button type="button" id="recipestepbtn" onclick="$.addrecipestep()">Add</button><br>
+					<hr>
+					<input type="submit" value="Submit"/>
 				</form>
-				</div>
-				<div id="itemlist">
-				
+				<div id="recipelist">
+					<table id="recipelisttb" border=1>
+					<thead>
+					<tr><th><b>name</b></th><th><b>prep-time</b></th><th>nationality</th><th>dietary-restriction</th><th>foodtype</th><th>servings</th><th><b>Update/Edit</b></th></tr>
+					</thead>
+					<tbody>
+					</tbody>
+					</table>
 				</div>
 				</div>
 <ul class="signup">

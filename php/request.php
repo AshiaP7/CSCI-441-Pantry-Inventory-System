@@ -4,6 +4,7 @@ script will only allow get from suggested domain and then request JSON from spoo
 script handle json
 */
 include "Inventory.php";
+include "recipe.php";
 header("Content-Type: application/json");
 //error_reporting(0); //need no post of warnings or errors as it could changes the json output
 $apikey = "fbd4007d4eae44aebd9d387fc1a9292c"; //your api key here
@@ -34,6 +35,17 @@ if($_SERVER['REQUEST_METHOD'] === 'GET'){
 			$json = json_encode(array("result"=>false));
 		}
 	}
+	else if (isset($_GET['recipe'])) {
+		$recipelist = new cRecipelist();
+		$fav = false;
+		$dis = false;
+		if($_GET['recipe'] == 1) $fav = true;
+		if($_GET['recipe'] == 2) $dis = true;
+		if($recipelist->validation == true) {
+			$json = json_encode($recipelist->getRecipes($fav, $dis));
+		}
+		else $json = "{result: 'false'}";
+	}
 	else if (isset($_GET['inventory'])) {
 		$inventory = new cInventory();
 		if($inventory->validation == true) {
@@ -51,7 +63,7 @@ else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	if(isset($_POST['itemname'])) {
 			$inventory = new cInventory();
 			if($inventory->validation == true) {
-				echo json_encode($inventory->AddToInventory($_POST['upc'], $_POST['itemname'], $_POST['image'], $_POST['quantity']));
+				echo json_encode($inventory->AddToInventory('', $_POST['itemname'], '', $_POST['quantity']));
 			}
 	}
 	else {
