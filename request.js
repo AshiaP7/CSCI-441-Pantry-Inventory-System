@@ -17,7 +17,7 @@ script.onload = function() {
 	var pubinputid;
 	var IngredientList =  [];
 	var recipeSteps = [];
-	var recipeList = [];
+
 	var recipeeditsub = false;
 	
 $( document ).ready(function() {
@@ -267,13 +267,11 @@ $.clearshowingredients = function () {
 		success: function(data) {
 			if(data.result == true) {
 				//loop json array return.
-				recipeList.splice(0, recipeList.length)
 				$.each(data.recipe, function(i, recipe) {
-					recipeList[i] = data.recipe[i];
 					$("#recipelisttb tbody").append("<tr><td>" + data.recipe[i].name + "</td><td>" + data.recipe[i].preptime + "</td><td>" + data.recipe[i].nationality + 
 					"</td><td>" + data.recipe[i].dietaryrestrictions + " </td><td>" +
 					data.recipe[i].foodtype + "</td><td>" + 
-					data.recipe[i].servingsize + "</td><td><button type=button onclick='$.openeditrecipe(" + i + ")'>Edit</button><button type=button>Remove</button></td></tr>");
+					data.recipe[i].servingsize + "</td><td><button type=button onclick='$.openeditrecipe(" + data.recipe[i].id + ")'>Edit</button><button type=button>Remove</button></td></tr>");
 				});
 							
 				}
@@ -282,17 +280,34 @@ $.clearshowingredients = function () {
 		});	
 	}
 	//--------------------------editbutton on recipe edit--------------------//
-	$.openeditrecipe = function(i) {
+	$.openeditrecipe = function(id) {
 		$("#addrecipefrm").show();
 		$("#recipelist").hide();
 		recipeeditsub = true;
-		$("#itemname").val(recipeList[i].name);
-		//$("#image").val(recipeList[i].img);
-		$("#serving").val(recipeList[i].img);
-		$("#prep-time").val(recipeList[i].img);
-		$("#serving").val(recipeList[i].img);
-		$("#serving").val(recipeList[i].img);
-		$("#serving").val(recipeList[i].img);
+		$.ajax({ 
+		type: "GET",
+		url: "php/request.php?recipe=" + id,
+		dataType: 'json',
+		success: function(data) {
+			if(data.result == true) {
+					$("#itemname").val(data.recipe.name);
+					//$("#image").val(recipeList[i].img);
+					$("#serving").val(data.recipe.servingsize);
+					$("#prep-time").val(data.recipe.preptime);
+					//$("#serving").val(data.recipe.);
+					//$("#serving").val(recipeList[i].img);
+					//$("#serving").val(recipeList[i].img);
+					$("#nationality").val(data.recipe.nationality);
+					$("#dietrestriction").val(data.recipe.dietaryrestrictions);
+					$("#foodtype").val(data.recipe.foodtype);
+					
+					//loop ingredeints and post here to table.
+					
+					//loop steps post to table here
+				}
+				else $(".body").prepend("Failed to recieve.");
+			}
+		});	
 	}
 	
 	//----------------displayrecipeadd form--------------//

@@ -58,7 +58,7 @@ class cRecipelist extends useraccount {
 		public function UpdateRecipe($id, $name, $img, $serving, $ingredient, $step) {
 			
 		}
-		public function getRecipes($fav, $dislike) {
+		public function getRecipes($id, $fav, $dislike) {
 			$accountid = parent::getaccountid();
 			$data = array();
 			$data['result'] = false;
@@ -68,7 +68,11 @@ class cRecipelist extends useraccount {
 				return $data;
 			}
 			if($fav == false && $dislike == false) {
-				$query = "SELECT * FROM recipes WHERE accountid='$accountid'";
+				if($id != 0) {
+					//get recipe and ingredients. since requesting id it is requesting all data for recipe
+					$query = "SELECT recipes.id, recipes.name, recipes.preptime, recipes.nationality, recipes.dietaryrestrictions, recipes.foodtype, recipes.servingsize, ingredients.itemid, ingredients.image, ingredients.upc FROM recipes INNER JOIN items ON recipes.id = ingredients.recipeid WHERE recipes.accountid = $accountid;";
+				}
+				else $query = "SELECT * FROM recipes WHERE accountid='$accountid' $where";
 				$result=$mysqli->query($query);
 				if($result == false) {
 					return $data;

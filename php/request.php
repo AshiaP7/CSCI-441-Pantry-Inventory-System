@@ -39,8 +39,8 @@ if($_SERVER['REQUEST_METHOD'] === 'GET'){
 		$recipelist = new cRecipelist();
 		$fav = false;
 		$dis = false;
-		if($_GET['recipe'] == 1) $fav = true;
-		if($_GET['recipe'] == 2) $dis = true;
+		if(isset($_GET['fav']) && $_GET['fav'] == 1) $fav = true;
+		if(isset($_GET['dis']) && $_GET['dis'] == 1) $dis = true;
 		if($recipelist->validation == true) {
 			$json = json_encode($recipelist->getRecipes($fav, $dis));
 		}
