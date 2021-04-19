@@ -67,25 +67,64 @@ class cRecipelist extends useraccount {
 				//echo "There was a problem connecting to server. Contact Admin.";
 				return $data;
 			}
-			if($fav == false && $dislike == false) {
-				if($id != 0) {
+				if($id != 0) { //specific id for editing
 					//get recipe and ingredients. since requesting id it is requesting all data for recipe
-					$query = "SELECT recipes.id, recipes.name, recipes.preptime, recipes.nationality, recipes.dietaryrestrictions, recipes.foodtype, recipes.servingsize, ingredients.itemid, ingredients.image, ingredients.upc FROM recipes INNER JOIN items ON recipes.id = ingredients.recipeid WHERE recipes.accountid = $accountid;";
-				}
-				else $query = "SELECT * FROM recipes WHERE accountid='$accountid' $where";
-				$result=$mysqli->query($query);
-				if($result == false) {
+					$query = "SELECT * FROM recipes WHERE accountid = $accountid AND id = $id;";
+					$result=$mysqli->query($query);
+					$myArray = array();
+					while($row = $result->fetch_array(MYSQLI_ASSOC)) {
+						$myArray[] = $row;
+					}
+					$query = "SELECT * FROM ingredients WHERE recipeid = $id;";
+					$result=$mysqli->query($query);
+					$ingredientlist = array();
+					while($row = $result->fetch_array(MYSQLI_ASSOC)) {
+						$ingredientlist[] = $row;
+					}
+					$query = "SELECT * FROM recipestep WHERE recipeid = $id;";
+					$result=$mysqli->query($query);
+					$recipestep = array();
+					while($row = $result->fetch_array(MYSQLI_ASSOC)) {
+						$recipestep[] = $row;
+					}
+					$data['result'] = true;
+					$data['recipe'] = $myArray[0];
+					$data['ingredients'] = $ingredientlist;
+					$data['recipestep'] = $recipestep;
+					$mysqli->close();
 					return $data;
 				}
-				$myArray = array();
-				while($row = $result->fetch_array(MYSQLI_ASSOC)) {
-					$myArray[] = $row;
+				else { 
+					$query = "SELECT * FROM recipes WHERE accountid='$accountid'";
+					$result=$mysqli->query($query);
+					if($result == false) {
+						$mysqli->close();
+						return $data;
+					}
+					$myArray = array();
+					while($row = $result->fetch_array(MYSQLI_ASSOC)) {
+						$myArray[] = $row;
+					}
+					$query = "SELECT * FROM favdislikes INNER JOIN recipes ON recipes.id = favdislikes.recipeid  WHERE favdislikes.accountid='$accountid' AND favdislikes.spoonid = 0;";
+					$result=$mysqli->query($query);
+					if($result == false) {
+						$mysqli->close();
+						return $data;
+					}
+					$favdislike = array();
+					while($row = $result->fetch_array(MYSQLI_ASSOC)) {
+						$favdislike[] = $row;
+					}
+					//get spoonid recipe information.. need api request here then insert the recipe information appended to $favdislike array
+					$query = "SELECT * FROM favdislikes WHERE accountid='$accountid' AND spoonid <> 0;"; //does not = 0
+					$result=$mysqli->query($query);
+					//loop results and request spoonid information.
 				}
 				$mysqli->close();
 				$data['result'] = true;
 				$data['recipe'] = $myArray;
+				$data['favdis'] = $favdislike;
 				return $data;
-			}
 		}
 }
 ?>

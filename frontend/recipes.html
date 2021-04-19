@@ -26,8 +26,6 @@
 				<div class="submenu">
 				<ul id=submenu>
 				<li><a id="recipelistadd" href="javascript:$.displayrecipefrm()">Add recipe</a></li>
-				<li><a id="dispfav" href="javascript:$.displayfav()">Favorits</a></li>
-				<li><a id="dispdis" href="javascript:$.displaydis()">Dislikes</a></li>
 				</ul>
 				</div>
 				<form action='php/request.php' method="post" id="addrecipefrm" style="display: none;"> 
@@ -84,7 +82,7 @@
 						  <option value="appetizer">Appetizer</option>
 						  <option value="salad">Salad</option>
 						   <option value="dessert">Dessert</option>
-						   <option value="dessert">Soup</option>
+						   <option value="soup">Soup</option>
 						</select><br>
 						<hr>
 						<h2 align=center>Ingredients</h2>
@@ -133,9 +131,28 @@
 					<input type="submit" value="Submit"/>
 				</form>
 				<div id="recipelist">
+				<h3>My Recipes</h3>
 					<table id="recipelisttb" border=1>
 					<thead>
 					<tr><th><b>name</b></th><th><b>prep-time</b></th><th>nationality</th><th>dietary-restriction</th><th>foodtype</th><th>servings</th><th><b>Update/Edit</b></th></tr>
+					</thead>
+					<tbody>
+					</tbody>
+					</table>
+					<br>
+					<h3>Favorits</h3>
+					<table id="recipefavtab" border=1>
+					<thead>
+					<tr><th><b>name</b></th><th><b>prep-time</b></th><th>nationality</th><th>dietary-restriction</th><th>foodtype</th><th>servings</th><th><b>Update/Edit</b></th></tr>
+					</thead>
+					<tbody>
+					</tbody>
+					</table>
+					<br>
+					<h3>Dislikes</h3>
+					<table id="recipedistab" border=1>
+					<thead>
+					<tr><th><b>name</b></th><th><b>prep-time</b></th><th>nationality</th><th>dietary-restriction</th><th>foodtype</th><th>servings</th><th><b>Personal</b></th><th><b>Update/Edit</b></th></tr>
 					</thead>
 					<tbody>
 					</tbody>

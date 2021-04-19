@@ -6,7 +6,7 @@ script handle json
 include "Inventory.php";
 include "recipe.php";
 header("Content-Type: application/json");
-//error_reporting(0); //need no post of warnings or errors as it could changes the json output
+error_reporting(0); //need no post of warnings or errors as it could changes the json output
 $apikey = "fbd4007d4eae44aebd9d387fc1a9292c"; //your api key here
 $allowed = array('hbprophecy.com', '192.168.0.2', '127.0.0.1'); //allowed domains
 $domainname = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST);
@@ -42,7 +42,7 @@ if($_SERVER['REQUEST_METHOD'] === 'GET'){
 		if(isset($_GET['fav']) && $_GET['fav'] == 1) $fav = true;
 		if(isset($_GET['dis']) && $_GET['dis'] == 1) $dis = true;
 		if($recipelist->validation == true) {
-			$json = json_encode($recipelist->getRecipes($fav, $dis));
+			$json = json_encode($recipelist->getRecipes($_GET['recipe'], $fav, $dis));
 		}
 		else $json = "{result: 'false'}";
 	}
