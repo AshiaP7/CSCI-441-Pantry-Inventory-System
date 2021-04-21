@@ -18,6 +18,10 @@ $domainname = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST);
 if($_SERVER['REQUEST_METHOD'] === 'GET'){
 	if(isset($_GET['search'])) {
 		$json = file_get_contents("https://api.spoonacular.com/recipes/search?apiKey=" . $apikey . "&query=" . urlencode($_GET['search']));
+		//append to json results array
+		$decode = json_decode($json, true);
+		//array_unshift($decode['results'], array('id' => 0, 'title' => 'test'));
+		$json = json_encode($decode);
 	}
 	else if (isset($_GET['stepurl'])) {
 		$json = file_get_contents("https://api.spoonacular.com/recipes/extract?apiKey=" . $apikey . "&url=" . urlencode($_GET['stepurl']));

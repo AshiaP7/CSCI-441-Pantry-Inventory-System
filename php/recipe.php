@@ -10,6 +10,7 @@ class cingredient {
 
 class cRecipelist extends useraccount {
 		private $Name;
+		private $apikey = "fbd4007d4eae44aebd9d387fc1a9292c";
 		
 		public function __construct() {
 			parent::__construct();
@@ -36,7 +37,7 @@ class cRecipelist extends useraccount {
 			$mysqli->close();
 		}
 		
-		public function RemoveRecipe($id) {
+		/*public function RemoveRecipe($id) {
 			$accountid = parent::getaccountid();
 			$data = array();
 			$data['result'] = false;
@@ -53,7 +54,7 @@ class cRecipelist extends useraccount {
 				$data['result'] = true;
 			}
 			$mysqli->close();
-		}
+		}*/
 		
 		public function UpdateRecipe($id, $name, $img, $serving, $ingredient, $step) {
 			
@@ -119,12 +120,68 @@ class cRecipelist extends useraccount {
 					$query = "SELECT * FROM favdislikes WHERE accountid='$accountid' AND spoonid <> 0;"; //does not = 0
 					$result=$mysqli->query($query);
 					//loop results and request spoonid information.
+					if($result != false) {
+						$urlspoon = "https://api.spoonacular.com/recipes/informationBulk?apiKey=" . $this->apikey . "&ids=";
+						$total = 0;
+						while ($row = $result->fetch_assoc()) {
+							
+							//bulk url https://api.spoonacular.com/recipes/informationBulk?apiKey=fbd4007d4eae44aebd9d387fc1a9292c&ids=1,2
+							$urlspoon .= $row['spoonid'] . ",";
+							$total++;
+						}
+						if($total > 0) {
+							$urlspoon = rtrim($urlspoon, ","); //trim comma from the last spoonid.
+							$json = file_get_contents($urlspoon);
+							$decode = json_decode($json, true);
+							
+							//unshift will add at the top.
+							//array_unshift($decode['results'], array('id' => 0, 'name' => $sptitle, 'preptime' => $spprep, 'spoonid' => $row['id']));
+							foreach($decode as $list) { //loop list json output
+								if(isset($list['cuisines'])) {
+									switch($list['cuisines']) {
+										default:
+											$nationality = $list['cuisines'][0];
+										break;
+									}
+								}
+								array_push($favdislike, array('id' => 0, 'name' => $list['title'], 'preptime' => $list['readyInMinutes'], 'nationality' => $nationality, 'dietaryrestrictions' => $list['diets'][0], 'foodtype' => $list['dishTypes'][0], 'servingsize' => $list['servings'], 'accountid' => (int)$accountid, 'spoonid' => $list['id']));
+							}
+						}
+					}
 				}
 				$mysqli->close();
 				$data['result'] = true;
 				$data['recipe'] = $myArray;
 				$data['favdis'] = $favdislike;
 				return $data;
+		}
+		
+		public function RemoveRecipe($id) {
+			$accountid = parent::getaccountid();
+			$data = array();
+			$data['result'] = false;
+			$mysqli = mysqli_connect(mysqlip, mysqluser, mysqlpass, "school");
+			if($mysqli->connect_errno) {
+				//echo "There was a problem connecting to server. Contact Admin.";
+				return $data;
+			}
+			
+			$query = "DELETE FROM favdislikes WHERE recipeid = $id AND accountid='$accountid'";
+			$result=$mysqli->query($query);
+			
+			$query = "DELETE FROM recipestep WHERE recipeid = $id AND accountid='$accountid'";
+			$result=$mysqli->query($query);
+			
+			$query = "DELETE FROM ingredients WHERE id = $id AND accountid='$accountid'";
+			$result=$mysqli->query($query);
+			
+			$query = "DELETE FROM recipes WHERE id = $id AND accountid='$accountid'";
+			$result=$mysqli->query($query);
+			if($result == false) {
+				return $data;
+			}
+			$data['result'] = true;
+			return $data;
 		}
 }
 ?>

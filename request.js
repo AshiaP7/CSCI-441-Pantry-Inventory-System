@@ -1,5 +1,4 @@
 var script = document.createElement('script'); 
- 
 script.src = 'https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js'; 
 script.type = 'text/javascript';
 document.getElementsByTagName('head')[0].appendChild(script);
@@ -176,7 +175,15 @@ $.clearshowingredients = function () {
 			}   
 		});	
 	});
-
+	//----------convert to json----------//
+	function objectifyForm(formArray) {
+		//serialize data function
+		var returnArray = {};
+		for (var i = 0; i < formArray.length; i++){
+			returnArray[formArray[i]['name']] = formArray[i]['value'];
+		}
+		return returnArray;
+	}
 
 //-----------POST additem form-----------------//
 	$("#additemfrm").submit(function(e) {
@@ -187,6 +194,39 @@ $.clearshowingredients = function () {
 			type: "POST",
 			url: url,
 			data: form.serialize(),
+			success: function(data) {
+				if(data.result == true) {
+					$("#displaymsg").html("Item Added");
+					$.displayinventory();
+				}
+				else {
+					$("#displaymsg").html("Failed to add item. May already exist");
+				}
+			},
+			error: function (xhr, ajaxOptions, thrownError){
+				alert(xhr.statusText);
+				alert(thrownError);
+			}   
+		});	
+	});
+
+//---------------------POST addrecipe------------------//
+	$("#addrecipefrm").submit(function(e) {
+		e.preventDefault();
+		var form = $(this);
+		var url = form.attr('action');
+		var vardata = objectifyForm(form.serializeArray());
+		delete vardata['messure'];
+		delete vardata['ingredient'];
+		delete vardata['unit'];
+		delete vardata['step'];
+		vardata['ingredient'] = IngredientList;
+		vardata['step'] = recipeSteps;
+		$.ajax({ 
+			type: "POST",
+			url: url,
+			dataType: 'json',
+			data: vardata,
 			success: function(data) {
 				if(data.result == true) {
 					$("#displaymsg").html("Item Added");
@@ -373,6 +413,21 @@ $.clearshowingredients = function () {
 				else $(".body").prepend("Failed to recieve.");
 			}
 		});	
+	}
+	//------------remove from my rcipelist-------------//
+	$.removerecipelist = function(id) {
+		//post to remove  (recieve new list)
+		$.ajax({ 
+		type: "GET",
+		url: "php/request.php?recipe=" + id + "&remove=true",
+		dataType: 'json',
+		success: function(data) {
+			if(data.result == true) {
+				$.displayrecipe(0);
+			}
+		}
+			
+		});
 	}
 	
 	//----------------displayrecipeadd form--------------//
