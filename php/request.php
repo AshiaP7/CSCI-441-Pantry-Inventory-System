@@ -6,7 +6,7 @@ script handle json
 include "Inventory.php";
 include "recipe.php";
 header("Content-Type: application/json");
-error_reporting(0); //need no post of warnings or errors as it could changes the json output
+//error_reporting(0); //need no post of warnings or errors as it could changes the json output
 $apikey = "fbd4007d4eae44aebd9d387fc1a9292c"; //your api key here
 $allowed = array('hbprophecy.com', '192.168.0.2', '127.0.0.1'); //allowed domains
 $domainname = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST);
@@ -18,9 +18,11 @@ $domainname = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST);
 //--------------------------Get request------------------------------//
 if($_SERVER['REQUEST_METHOD'] === 'GET'){
 	if(isset($_GET['search'])) {
+		$recipelist = new cRecipelist();
 		$json = file_get_contents("https://api.spoonacular.com/recipes/search?apiKey=" . $apikey . "&query=" . urlencode($_GET['search']));
 		//append to json results array
 		$decode = json_decode($json, true);
+		$jsonapp = $recipelist->search($_GET['search']);
 		//array_unshift($decode['results'], array('id' => 0, 'title' => 'test'));
 		$json = json_encode($decode);
 	}
@@ -66,6 +68,38 @@ if($_SERVER['REQUEST_METHOD'] === 'GET'){
 		if($inventory->validation == true) {
 			$json = json_encode($inventory->GetInventory());
 		}else $json = "{ result: 'false' }";
+	}
+	else if(isset($_GET['likeid'])) {
+		//like
+		$recipelist = new cRecipelist();
+		$spoonid = 0;
+		$id = 0;
+		if(isset($_GET['spoonid'])) {
+			$spoonid = $_GET['likeid'];
+		}
+		else {
+			$id = $_GET['likeid'];
+		}
+		if(isset($_GET['remove'])) {
+			$json = json_encode($recipelist->LikeDisLikeRecipeRemove($id, $spoonid, true));
+		}
+		else {
+			$json = json_encode($recipelist->LikeDisLikeRecipe($id, $spoonid, true));
+		}
+	}
+	else if(isset($_GET['dislike'])) {
+		//dislike
+		$recipelist = new cRecipelist();
+		$spoonid = 0;
+		$id = 0;
+		if(isset($_GET['spoonid'])) {
+			$spoonid = $_GET['dislike'];
+		}
+		else {
+			$id = $_GET['dislike'];
+		}
+		if(isset($_GET['remove'])) $json = json_encode($recipelist->LikeDisLikeRecipeRemove($id, $spoonid, false));
+		else $json = json_encode($recipelist->LikeDisLikeRecipe($id, $spoonid, false));
 	}
 	else {
 		exit();

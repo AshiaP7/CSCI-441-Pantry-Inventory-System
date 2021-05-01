@@ -52,8 +52,20 @@ script.onload = function() {
 				searchdata = data;
 				$("#showresults").html("");
 				$.each(data.results, function(i, item) {
+					var likelink;
 					$("#showresults").append(data.results[i].title + "(Minutes:" + data.results[i].readyInMinutes + ")<br><a href='javascript:get_step(" + data.results[i].id + ");'><img src='" + 
-					"https://spoonacular.com/recipeImages/" + data.results[i].id + "-90x90.jpg" + "'></a>" + "<br>");
+					"https://spoonacular.com/recipeImages/" + data.results[i].id + "-90x90.jpg" + "'></a>");
+					var vgetid;
+					var bspoonid = false;
+					if(data.results[i].recipeid > 0) vgetid = data.results[i].recipeid;
+					else {
+						vgetid = data.results[i].id;
+						bspoonid = true;
+					}
+					if(data.results[i].blike == true) $("#showresults").append("<input id='likeimgval" + i + "' type='hidden' value=1><img id='likeimg" + i + "' onmouseover='$.likemouseover(" + i + ")' width='50' height='50' style='width: 40px; height: 50px; object-fit: cover; object-position: 80% 0; margin: 5px;' onclick='$.likeclick(" + vgetid + ", " + bspoonid + ", " + i + ")' src='./images/thumbsup.png'>");
+						else $("#showresults").append("<input id='likeimgval" + i + "' type='hidden' value=0><img id='likeimg" + i + "' onmouseover='$.likemouseover(" + i + ")' width='50' height='50' style='width: 40px; height: 50px; object-fit: cover; object-position: 9% 0; margin: 5px;' onclick='$.likeclick(" + vgetid + "," + bspoonid + "," + i + ")' src='./images/thumbsup.png'>");
+					if(data.results[i].dislike == true) $("#showresults").append("<input id='dislikeimgval" + i + "' type='hidden' value=1><img id='dislikeimg" + i + "' onmouseover='$.dislikemouseover(" + i + ")' width='50' height='50' style='width: 40px; height: 50px; object-fit: cover; object-position: 80% 0; margin: 5px;' onclick='$.dislikeclick(" + vgetid + "," + bspoonid + "," + i + ")' src='./images/thumbsdown.png'><br>");
+						else $("#showresults").append("<input id='dislikeimgval" + i + "' type='hidden' value=0><img id='dislikeimg" + i + "' onmouseover='$.dislikemouseover(" + i + ")' width='50' height='50' style='width: 40px; height: 50px; object-fit: cover; object-position: 8% 0; margin: 5px;' onclick='$.dislikeclick(" + vgetid + "," + bspoonid + "," + i + ")' src='./images/thumbsdown.png'><br>");
 				});
 				var pages = Math.ceil(data.totalResults / 10);
 				$("#showresults").append("<br>Pages: ");
@@ -71,6 +83,66 @@ script.onload = function() {
 			}
 		});
 		if(popstate == false) history.pushState({ searchval, curpage }, 'Title: ' + searchval, '?search=' + searchval + "&page=" + curpage); //need page number
+	}
+	
+	$.likemouseover = function(id) {
+			var ival = $("#likeimgval" + id).val();
+			$("#likeimg" + id).mouseover(function() {
+				if(ival == 0) $(this).attr("style", "width: 40px; height: 50px; object-fit: cover; object-position: 94% 0; margin: 5px;");
+				else $(this).attr("style", "width: 40px; height: 50px; object-fit: cover; object-position: 9% 0; margin: 5px;");
+			});
+			$("#likeimg" + id).mouseout(function() {
+				if(ival == 0) $(this).attr("style", "width: 40px; height: 50px; object-fit: cover; object-position: 9% 0; margin: 5px;");
+				else $(this).attr("style", "width: 40px; height: 50px; object-fit: cover; object-position: 94% 0; margin: 5px;");
+			});
+	}
+	
+	$.dislikemouseover = function(id) {
+		var ival = $("#dislikeimgval" + id).val();
+		$("#dislikeimg" + id).mouseover(function() {
+			if(ival == 0) $(this).attr("style", "width: 40px; height: 50px; object-fit: cover; object-position: 94% 0; margin: 5px;");
+			else $(this).attr("style", "width: 40px; height: 50px; object-fit: cover; object-position: 8% 0; margin: 5px;");
+		});
+		$("#dislikeimg" + id).mouseout(function() {
+			if(ival == 0) $(this).attr("style", "width: 40px; height: 50px; object-fit: cover; object-position: 8% 0; margin: 5px;");
+			else $(this).attr("style", "width: 40px; height: 50px; object-fit: cover; object-position: 94% 0; margin: 5px;");
+		});
+	}
+	
+	$.likeclick = function(id, spoonid, index) {
+		var vurl;
+		var ival = $("#likeimgval" + index).val();
+		if(spoonid == true) vurl = "php/request.php?likeid=" + id + "&spoonid=true";
+		else vurl = "php/request.php?likeid=" + id;
+		if(ival == 1) vurl = vurl + "&remove=true";
+		$.ajax({ 
+			type: "GET",
+			url: vurl,
+			dataType: 'json',
+			success: function(data) {
+				$("#likeimg" + index).attr("style", "width: 40px; height: 50px; object-fit: cover; object-position: 94% 0; margin: 5px;");
+				if(ival == 0) $("#likeimgval" + index).val(1);
+				else $("#likeimgval" + index).val(0);
+			}
+		});
+	}
+	
+	$.dislikeclick = function(id, spoonid, index) {
+		var vurl;
+		var ival = $("#dislikeimgval" + index).val();
+		if(spoonid == true) vurl = "php/request.php?dislike=" + id + "&spoonid=true";
+		else vurl = "php/request.php?dislike=" + id;
+		if(ival == 1) vurl = vurl + "&remove=true";
+		$.ajax({ 
+			type: "GET",
+			url: vurl,
+			dataType: 'json',
+			success: function(data) {
+				$("#dislikeimg" + index).attr("style", "width: 40px; height: 50px; object-fit: cover; object-position: 94% 0; margin: 5px;");
+				if(ival == 0) $("#dislikeimgval" + index).val(1);
+				else $("#dislikeimgval" + index).val(0);
+			}
+		});
 	}
 
 $.clearshowresults = function() {
@@ -341,7 +413,10 @@ $.clearshowingredients = function () {
 			if(data.result == true) {
 				//loop json array return.
 				$.each(data.recipe, function(i, recipe) {
-					$("#recipelisttb tbody").append("<tr><td>" + data.recipe[i].name + "</td><td>" + data.recipe[i].preptime + "</td><td>" + data.recipe[i].nationality + 
+					var linkurl;
+					if(data.recipe[i].spoonid != 0) linkurl = "./home.html?recipe=" + data.recipe[i].spoonid + "&spoonid=true";
+					else linkurl = "./home.html?recipe=" + data.recipe[i].id;
+					$("#recipelisttb tbody").append("<tr><td><a href='" + linkurl + "'>" + data.recipe[i].name + "</a></td><td>" + data.recipe[i].preptime + "</td><td>" + data.recipe[i].nationality + 
 					"</td><td>" + data.recipe[i].dietaryrestrictions + " </td><td>" +
 					data.recipe[i].foodtype + "</td><td>" + 
 					data.recipe[i].servingsize + "</td><td><button type=button onclick='$.openeditrecipe(" + data.recipe[i].id + ")'>Edit</button><button type=button onclick='$.removerecipelist(" + data.recipe[i].id + ", false)'>Remove</button></td></tr>");
@@ -351,8 +426,11 @@ $.clearshowingredients = function () {
 					var personalstring;
 					if(data.favdis[i].spoonid == 0) personalstring = "TRUE";
 					else personalstring = "FALSE";
+					var linkurl;
+					if(data.favdis[i].spoonid != 0) linkurl = "./home.html?recipe=" + data.favdis[i].spoonid + "&spoonid=true";
+					else linkurl = "./home.html?recipe=" + data.recipe[i].recipe;
 					if(data.favdis[i].like == true) {
-						$("#recipefavtab tbody").append("<tr><td>" + data.favdis[i].name + "</td><td>" + data.favdis[i].preptime + "</td><td>" + data.favdis[i].nationality + 
+						$("#recipefavtab tbody").append("<tr><td><a href='" + linkurl + "'>" + data.favdis[i].name + "</a></td><td>" + data.favdis[i].preptime + "</td><td>" + data.favdis[i].nationality + 
 						"</td><td>" + data.favdis[i].dietaryrestrictions + " </td><td>" +
 						data.favdis[i].foodtype + "</td><td>" + 
 						data.favdis[i].servingsize + "</td><td>" +
@@ -360,7 +438,10 @@ $.clearshowingredients = function () {
 						"<td><button type=button onclick='$.removerecipelist(" + data.favdis[i].id + ", true)>Remove</button></td></tr>");
 					}
 					else {
-						$("#recipedistab tbody").append("<tr><td>" + data.favdis[i].name + "</td><td>" + data.favdis[i].preptime + "</td><td>" + data.favdis[i].nationality + 
+						var linkurl;
+						if(data.favdis[i].spoonid != 0) linkurl = "./home.html?recipe=" + data.favdis[i].spoonid + "&spoonid=true";
+						else linkurl = "./home.html?recipe=" + data.recipe[i].recipeid;
+						$("#recipedistab tbody").append("<tr><td><a href='" + linkurl + "'>" + data.favdis[i].name + "</a></td><td>" + data.favdis[i].preptime + "</td><td>" + data.favdis[i].nationality + 
 						"</td><td>" + data.favdis[i].dietaryrestrictions + " </td><td>" +
 						data.favdis[i].foodtype + "</td><td>" + 
 						data.favdis[i].servingsize + "</td><td>" +

@@ -20,6 +20,10 @@ class cRecipelist extends useraccount {
 			parent::__construct();
 		}
 		
+		public function search($search) {
+			
+		}
+		
 		public function AddRecipe($name, $preptime, $nationality, $dietaryrestrictions, $foodtype, $img, $serving, $ingredient, $step) {
 				//ingredient will be an object with veriables ingredient, measurement, unit
 				//step is just a 1-n string array.
@@ -37,6 +41,7 @@ class cRecipelist extends useraccount {
 			$result=$mysqli->query($query);
 			if($result->num_rows > 0) {
 				$data['message'] = "Name Duplicated";
+				$mysqli->close();
 				return $data;
 			}
 			$query = "INSERT INTO recipes (name, preptime, nationality, dietaryrestrictions, foodtype, servingsize, accountid, spoonid) VALUES('$name', '$preptime', '$nationality', '$dietaryrestrictions', '$foodtype', '$serving', '$accountid', '0');";
@@ -128,7 +133,7 @@ class cRecipelist extends useraccount {
 					while($row = $result->fetch_array(MYSQLI_ASSOC)) {
 						$myArray[] = $row;
 					}
-					$query = "SELECT favdislikes.id, favdislikes.accountid, favdislikes.recipeid, favdislikes.spoonid, favdislikes.like, recipes.name, recipes.preptime, recipes.nationality, recipes.dietaryrestrictions, recipes.foodtype, recipes.servingsize, recipes.spoonid FROM favdislikes INNER JOIN recipes ON recipes.id = favdislikes.recipeid  WHERE favdislikes.accountid='$accountid' AND favdislikes.spoonid = 0;";
+					$query = "SELECT favdislikes.id, favdislikes.accountid, favdislikes.recipeid, favdislikes.spoonid, favdislikes.blike, recipes.name, recipes.preptime, recipes.nationality, recipes.dietaryrestrictions, recipes.foodtype, recipes.servingsize, recipes.spoonid FROM favdislikes INNER JOIN recipes ON recipes.id = favdislikes.recipeid  WHERE favdislikes.accountid='$accountid' AND favdislikes.spoonid = 0;";
 					$result=$mysqli->query($query);
 					if($result == false) {
 						$mysqli->close();
@@ -207,6 +212,7 @@ class cRecipelist extends useraccount {
 			$query = "DELETE FROM recipes WHERE id = $id AND accountid='$accountid'";
 			$result=$mysqli->query($query);
 			if($result == false) {
+				$mysqli->close();
 				return $data;
 			}
 			$mysqli->close();
@@ -226,10 +232,65 @@ class cRecipelist extends useraccount {
 			$query = "DELETE FROM favdislikes WHERE id = $id AND accountid='$accountid'";
 			$result=$mysqli->query($query);
 			if($result == false) {
-				$data['message'] = $query;
+				//$data['message'] = $query;
+				$mysqli->close();
 				return $data;
 			}
 			$mysqli->close();
+			$data['result'] = true;
+			return $data;
+		}
+		
+		public function LikeDisLikeRecipe($id, $spoonid, $like) {
+			$accountid = parent::getaccountid();
+			$data = array();
+			$data['result'] = false;
+			$mysqli = mysqli_connect(mysqlip, mysqluser, mysqlpass, "school");
+			if($mysqli->connect_errno) {
+				//echo "There was a problem connecting to server. Contact Admin.";
+				return $data;
+			}
+			$query = "SELECT (recipeid, spoonid, accountid, blike) FROM favdislikes WHERE accountid = $accountid AND recipeid = $id AND spoonid = $spoonid;";
+			$result=$mysqli->query($query);
+			if($result == true && $result->num_rows > 0) {
+				$row = $result->fetch_array(MYSQLI_ASSOC);
+				if($row['blike'] != $like) {
+					$query = "UPDATE favdislikes SET recipeid = $id, spoonid = $spoonid, blike = $like WHERE accountid = $accountid AND recipeid = $id AND spoonid = $spoonid";
+					$result=$mysqli->query($query);
+				}
+			}
+			else {
+				$query = "INSERT IGNORE INTO favdislikes (accountid, recipeid, spoonid, blike) VALUES($accountid, $id, $spoonid, $like);";
+				$result=$mysqli->query($query);
+				if($result == false) {
+					$data['message'] = $query;
+					$mysqli->close();
+					return $data;
+				}
+			}
+			$mysqli->close();
+			$data['result'] = true;
+			return $data;
+		}
+		public function LikeDisLikeRecipeRemove($id, $spoonid, $like) {
+			$accountid = parent::getaccountid();
+			$data = array();
+			$data['result'] = false;
+			$mysqli = mysqli_connect(mysqlip, mysqluser, mysqlpass, "school");
+			if($mysqli->connect_errno) {
+				//echo "There was a problem connecting to server. Contact Admin.";
+				return $data;
+			}
+			if($spoonid == true) $query = "DELETE FROM favdislikes WHERE accountid = $accountid AND spoonid = $spoonid";
+			else $query = "DELETE FROM favdislikes WHERE accountid = $accountid AND recipeid = $id";
+			$result=$mysqli->query($query);
+			if($result == false) {
+				$data['message'] = $query;
+				$mysqli->close();
+				return $data;
+			}
+			$mysqli->close();
+			$data['message'] = $query;
 			$data['result'] = true;
 			return $data;
 		}
