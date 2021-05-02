@@ -74,6 +74,11 @@ body{
 	margin-top: 30px;
 }
 
+.body div#showresults {
+	word-wrap: break-word;
+	width: 490px;
+}
+
 
 .body div#featured h3{
 	color: #AD6300;
