@@ -5,7 +5,7 @@ body{
 	
 }
 .page{
-	background-color: #f5f5f5;
+	background-color: #ececec;
 }
 
 /*------------------------- Font ------------------------*/ 
@@ -16,7 +16,7 @@ body{
          url('rokkitt-regular-webfont.woff') format('woff'),
          url('rokkitt-regular-webfont.ttf') format('truetype'),
          url('rokkitt-regular-webfont.svg#RokkittRegular') format('svg');
-    font-weight: normal;
+    font-weight: bold;
     font-style: normal;
 }
 
